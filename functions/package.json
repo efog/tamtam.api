@@ -1,0 +1,19 @@
+{
+  "name": "tamtam.api",
+  "version": "0.0.1",
+  "description": "TamTam API as Azure Functions",
+  "scripts": {
+    "test": "jest"
+  },
+  "type": "module",
+  "author": "Efog",
+  "dependencies": {
+    "aws-sdk": "^2.649.0",
+    "eslint": "^6.8.0",
+    "esm": "^3.2.25",
+    "sinon": "^9.0.1"
+  },
+  "devDependencies": {
+    "ava": "^3.5.2"
+  }
+}
