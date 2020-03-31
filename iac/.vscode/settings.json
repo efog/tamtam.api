@@ -1,0 +1,10 @@
+{
+    "terraform.indexing": {
+        "enabled": false,
+        "liveIndexing": false
+    },
+    "terraform.languageServer": {
+        "enabled": true,
+        "args": []
+    }
+}

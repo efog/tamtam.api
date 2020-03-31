@@ -1,5 +1,5 @@
-import { UserService } from "./user-service.js";
+const UserService = require("./user-service.js");
 
-export default {
+module.exports = {
     "UserService": UserService
 };

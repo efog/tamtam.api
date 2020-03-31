@@ -5,10 +5,11 @@
   "scripts": {
     "test": "nyc --reporter=lcov --reporter=text-summary ava"
   },
-  "type": "module",
   "author": "Efog",
   "dependencies": {
-    "aws-sdk": "^2.649.0"
+    "aws-sdk": "^2.649.0",
+    "debug": "^4.1.1",
+    "momentjs": "^2.0.0"
   },
   "devDependencies": {
     "ava": "^3.5.2",

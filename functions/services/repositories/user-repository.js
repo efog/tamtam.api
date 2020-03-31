@@ -1,7 +1,8 @@
-import AWS from "aws-sdk";
-import User from "../models/user.js";
-import fs from "fs";
-import path from "path";
+const AWS = require("aws-sdk");
+const NotFoundException = require("../exceptions").NotFoundException;
+const User = require("../models/user.js");
+const fs = require("fs");
+const path = require("path");
 
 /**
  * User object repository for read/write
@@ -9,7 +10,7 @@ import path from "path";
  * @export
  * @class UserRepository
  */
-export default class UserRepository {
+module.exports = class UserRepository {
 
     /**
      * Default constructor
@@ -25,11 +26,8 @@ export default class UserRepository {
         return this._documentClient;
     }
 
-    get IacCatalog() {
-        if (!this._iacCatalog) {
-            this._iacCatalog = JSON.parse(fs.readFileSync(`${path.join(process.env.LAMBDA_TASK_ROOT || process.cwd(), "iac.json")}`, "utf8"));
-        }
-        return this._iacCatalog;
+    get tableName() {
+        return process.env.CONFIG_USERSTABLENAME || "users";
     }
 
     /**
@@ -41,18 +39,31 @@ export default class UserRepository {
      */
     async getByUserId(userId) {
         const params = {
-            "TableName": this.IacCatalog.userdata_table.value.name,
+            "TableName": this.tableName,
             "Key": {
-                "userId": userId
+                "userId": userId,
+                "doctype": "user"
             }
         };
         const item = await this.documentClient.get(params).promise();
-        const user = new User();
-        const itemKeys = Object.keys(item.Item);
-        for (let index = 0; index < itemKeys.length; index++) {
-            const element = itemKeys[index];
-            user[element] = item.Item[element].S || item.item.N;
+        if (item.Item) {
+            const itemKeys = Object.keys(item.Item);
+            const user = new User();
+            for (let index = 0; index < itemKeys.length; index++) {
+                const element = itemKeys[index];
+                user[element] = item.Item[element];
+            }
+            return user;
         }
-        return user;
+        throw new NotFoundException("not found");
     }
-}
+    async upsert(document) {
+        const params = {
+            "TableName": this.tableName,
+            "Item": document
+        };
+        const data = await this.documentClient.put(params).promise();
+        const update = await this.getByUserId(document.userId);
+        return update;
+    }
+};

@@ -1,12 +1,13 @@
+const UserRepository = require("./repositories/user-repository");
+
 /**
  * User service implementation
  *
- * @export
  * @class UserService
  */
-export class UserService {
+module.exports = class UserService {
     constructor(userRepository) {
-        this._userRepository = userRepository;
+        this._userRepository = userRepository || new UserRepository();
     }
     
     /**
@@ -18,4 +19,4 @@ export class UserService {
         const returnValue = await this._userRepository.getByUserId(userId);
         return returnValue;
     }
-}
+};

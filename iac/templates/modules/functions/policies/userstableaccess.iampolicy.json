@@ -1,0 +1,46 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "dynamodb:GetShardIterator",
+                "dynamodb:Scan",
+                "dynamodb:Query",
+                "dynamodb:DescribeStream",
+                "dynamodb:GetRecords"
+            ],
+            "Resource": [
+                "arn:aws:dynamodb:ca-central-1:#{account_number}:table/#{table_name}/index/*",
+                "arn:aws:dynamodb:ca-central-1:#{account_number}:table/#{table_name}/stream/*"
+            ]
+        },
+        {
+            "Sid": "VisualEditor1",
+            "Effect": "Allow",
+            "Action": [
+                "dynamodb:BatchGetItem",
+                "dynamodb:ConditionCheckItem",
+                "dynamodb:PutItem",
+                "dynamodb:DescribeTable",
+                "dynamodb:DeleteItem",
+                "dynamodb:GetItem",
+                "dynamodb:Scan",
+                "dynamodb:ListTagsOfResource",
+                "dynamodb:Query",
+                "dynamodb:UpdateItem"
+            ],
+            "Resource": "arn:aws:dynamodb:ca-central-1:#{account_number}:table/#{table_name}"
+        },
+        {
+            "Sid": "VisualEditor2",
+            "Effect": "Allow",
+            "Action": [
+                "dynamodb:ListTables",
+                "dynamodb:ListStreams"
+            ],
+            "Resource": "*"
+        }
+    ]
+}

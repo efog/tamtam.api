@@ -1,7 +1,7 @@
-import Services from "../services/index.js";
-import UserRepository from "../services/repositories/user-repository.js";
-import sinon from "sinon";
-import test from "ava";
+const Services = require("../services/index.js");
+const UserRepository = require("../services/repositories/user-repository.js");
+const sinon = require("sinon");
+const test = require("ava");
 
 test("can instantiate user service", (expect) => {
     const target = new Services.UserService();
