@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "TamTam API as Azure Functions",
   "scripts": {
-    "test": "nyc ava"
+    "test": "nyc --reporter=lcov --reporter=text-summary ava"
   },
   "type": "module",
   "author": "Efog",

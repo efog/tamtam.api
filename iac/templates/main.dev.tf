@@ -23,6 +23,7 @@ locals {
 module "userdatabase" {
   source = "./modules/userdatabase"
   tags   = local.tags
+  env    = "dev"
 }
 
 output "userdata_table" {
