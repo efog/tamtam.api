@@ -18,7 +18,7 @@ test("gets a user by its id", async (expect) => {
     fakeUserRepo.getByUserId = fakeGetByUserId;
     
     const target = new Services.UserService(fakeUserRepo);
-    const value = await target.getUserDocument(id);
+    const value = await target.getUser(id);
     expect.is(value.userId, id, "should call the backend and return a user object");
     expect.truthy(fakeGetByUserId.calledOnce);
 });

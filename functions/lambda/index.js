@@ -1,6 +1,11 @@
+import Services from "../services/index.js";
+
 export default {
-    GetByUserId(event, context) {
+    async GetByUserId(event, context) {
+        const service = new Services.UserService();
         console.log(`EVENT: ${JSON.stringify(event, null, 2)}`);
-        return context.logStreamName;
+        const userId = event.pathParameters.param1;
+        const user = await service.getUser(userId);
+        return user;
     }
 };

@@ -1,4 +1,5 @@
 import AWS from "aws-sdk";
+import User from "../models/user.js";
 import fs from "fs";
 import path from "path";
 
@@ -12,12 +13,16 @@ export default class UserRepository {
 
     /**
      * Default constructor
-     * @param {*} dynamoDB dynamo DB dependency
+     * @param {*} documentClient dynamo DB document client dependency
      * 
      * @memberof UserRepository
      */
-    constructor(dynamoDB) {
-        this._dynamoDB = dynamoDB || new AWS.DynamoDB({ "apiVersion": "2012-08-10" });
+    constructor(documentClient) {
+        this._documentClient = documentClient || new AWS.DynamoDB.DocumentClient({ "apiVersion": "2012-08-10" });
+    }
+
+    get documentClient() {
+        return this._documentClient;
     }
 
     get IacCatalog() {
@@ -31,20 +36,23 @@ export default class UserRepository {
      * Gets user document by user id
      *
      * @param {*} userId user identifier value
-     * @returns {*} user document
+     * @returns {User} user document
      * @memberof UserRepository
      */
     async getByUserId(userId) {
         const params = {
-            "ExpressionAttributeValues": {
-                ":v1": {
-                    "S": userId
-                }
-            }, 
-            "KeyConditionExpression": "userId = :v1", 
-            "ProjectionExpression": "userID", 
-            "TableName": this.IacCatalog.userdata_table.value.name
+            "TableName": this.IacCatalog.userdata_table.value.name,
+            "Key": {
+                "userId": userId
+            }
         };
-        return null;
+        const item = await this.documentClient.get(params).promise();
+        const user = new User();
+        const itemKeys = Object.keys(item.Item);
+        for (let index = 0; index < itemKeys.length; index++) {
+            const element = itemKeys[index];
+            user[element] = item.Item[element].S || item.item.N;
+        }
+        return user;
     }
 }
