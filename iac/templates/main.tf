@@ -12,6 +12,10 @@ terraform {
   }
 }
 
+variable region {
+  default = "ca-central-1"
+}
+
 variable env {
   default = "dev"
 }
@@ -54,6 +58,8 @@ module "functions" {
   users_table_name                      = module.userdatabase.userdata_table.name
   lambda_api_layer_package_filename     = var.lambda_api_layer_package_filename
   lambda_api_functions_package_filename = var.lambda_api_functions_package_filename
+  account_number                        = var.aws_account_number
+  region                                = var.region
 }
 
 output "userdata_table" {

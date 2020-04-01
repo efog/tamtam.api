@@ -9,3 +9,7 @@ variable users_table_name {}
 variable lambda_api_layer_package_filename {}
 
 variable lambda_api_functions_package_filename {}
+
+variable region {}
+
+variable account_number {}

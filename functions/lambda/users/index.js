@@ -7,8 +7,12 @@ const handlers = {
         const userId = "someone.else@example.com";
         const user = await service.getUser(userId);
         callback(null, {
+            "isBase64Encoded": false,
             "statusCode": 200,
-            "user": user
+            "body": JSON.stringify(user),
+            "headers": {
+                "x-response-ok": true
+            }
         });
     }
 };
