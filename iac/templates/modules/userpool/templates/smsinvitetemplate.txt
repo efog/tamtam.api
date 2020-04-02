@@ -1,0 +1,2 @@
+Hope you were expecting us!
+Here's your username : {username} and your password {####}
