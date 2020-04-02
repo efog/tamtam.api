@@ -1,0 +1,17 @@
+{
+    "Version": "2008-10-17",
+    "Statement": [
+        {
+            "Sid": "stmt1585852267803",
+            "Effect": "Allow",
+            "Principal": {
+                "Service": "cognito-idp.amazonaws.com"
+            },
+            "Action": [
+                "ses:SendEmail",
+                "ses:SendRawEmail"
+            ],
+            "Resource": "arn:aws:ses:#{region}:#{account_number}:identity/#{email}"
+        }
+    ]
+}

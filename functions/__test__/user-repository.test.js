@@ -1,5 +1,5 @@
 const AWS = require("aws-sdk");
-AWS.config.update({ "region": "ca-central-1" });
+AWS.config.update({ "region": "us-east-1" });
 
 const User = require("../services/models/user.js");
 const UserRepository = require("../services/repositories/user-repository.js");

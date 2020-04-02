@@ -12,8 +12,8 @@
                 "dynamodb:GetRecords"
             ],
             "Resource": [
-                "arn:aws:dynamodb:ca-central-1:#{account_number}:table/#{table_name}/index/*",
-                "arn:aws:dynamodb:ca-central-1:#{account_number}:table/#{table_name}/stream/*"
+                "arn:aws:dynamodb:us-east-1:#{account_number}:table/#{table_name}/index/*",
+                "arn:aws:dynamodb:us-east-1:#{account_number}:table/#{table_name}/stream/*"
             ]
         },
         {
@@ -27,8 +27,8 @@
                 "dynamodb:GetRecords"
             ],
             "NotResource": [
-                "arn:aws:dynamodb:ca-central-1:#{account_number}:table/#{table_name}/index/*",
-                "arn:aws:dynamodb:ca-central-1:#{account_number}:table/#{table_name}/stream/*"
+                "arn:aws:dynamodb:us-east-1:#{account_number}:table/#{table_name}/index/*",
+                "arn:aws:dynamodb:us-east-1:#{account_number}:table/#{table_name}/stream/*"
             ]
         },
         {
@@ -46,7 +46,7 @@
                 "dynamodb:Query",
                 "dynamodb:UpdateItem"
             ],
-            "Resource": "arn:aws:dynamodb:ca-central-1:#{account_number}:table/#{table_name}"
+            "Resource": "arn:aws:dynamodb:us-east-1:#{account_number}:table/#{table_name}"
         },
         {
             "Sid": "VisualEditor1Deny",
@@ -63,7 +63,7 @@
                 "dynamodb:Query",
                 "dynamodb:UpdateItem"
             ],
-            "NotResource": "arn:aws:dynamodb:ca-central-1:#{account_number}:table/#{table_name}"
+            "NotResource": "arn:aws:dynamodb:us-east-1:#{account_number}:table/#{table_name}"
         },
         {
             "Sid": "VisualEditor2",
