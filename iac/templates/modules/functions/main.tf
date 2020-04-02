@@ -10,8 +10,8 @@ resource "aws_iam_role_policy_attachment" "lambda_users_table_access_policy_atta
 }
 
 resource "aws_lambda_layer_version" "lambda_api_layer" {
-  layer_name          = "lambda_api_layer_${var.tags.env}"
-  description         = "lambda api layer in ${var.tags.env} environment"
+  layer_name          = "tamtam_lambda_api_layer_${var.tags.env}"
+  description         = "Tamtam lambda api layer in ${var.tags.env} environment"
   compatible_runtimes = ["nodejs12.x"]
   filename            = var.lambda_api_layer_package_filename
   source_code_hash    = filebase64sha256(var.lambda_api_layer_package_filename)
@@ -44,6 +44,7 @@ resource "aws_lambda_permission" "apigw_lambda_api_getuserbyid_permission" {
 
 resource "aws_api_gateway_rest_api" "tamtam_api" {
   name = "tamtam_api_${var.tags.env}"
+  tags = var.tags
 }
 
 resource "aws_api_gateway_method" "method" {
