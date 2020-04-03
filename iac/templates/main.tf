@@ -89,6 +89,7 @@ module "functions" {
   lambda_api_functions_package_filename = var.lambda_api_functions_package_filename
   account_number                        = var.aws_account_number
   region                                = var.region
+  tamtam_aws_cognito_user_pool          = module.userpool.tamtam_aws_cognito_user_pool
 }
 
 output "userdata_table" {

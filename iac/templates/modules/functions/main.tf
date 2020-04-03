@@ -68,3 +68,10 @@ resource "aws_api_gateway_resource" "users" {
   parent_id   = aws_api_gateway_rest_api.tamtam_api.root_resource_id
   rest_api_id = aws_api_gateway_rest_api.tamtam_api.id
 }
+
+resource "aws_api_gateway_authorizer" "tamtam_api_authorizer" {
+  name          = "tamtam_api_authorizer_${var.tags.env}"
+  rest_api_id   = "${aws_api_gateway_rest_api.tamtam_api.id}"
+  type          = "COGNITO_USER_POOLS"
+  provider_arns = [var.tamtam_aws_cognito_user_pool.arn]
+}

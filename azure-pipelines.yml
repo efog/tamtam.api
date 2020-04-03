@@ -21,13 +21,13 @@ steps:
 - script: |
     cd $(Build.SourcesDirectory)/functions
     yarn test
-    zip -r $(Build.ArtifactStagingDirectory)/nyc_cov_$(Build.BuildNumber).zip ./coverage/*  
+    zip -r $(Build.ArtifactStagingDirectory)/nyc_cov.zip ./coverage/*  
   displayName: 'Run unit tests'
 
 - script: |
     cd $(Build.SourcesDirectory)/functions
-    zip -r functions_package_$(Build.BuildNumber).zip . -x node_modules\* 
-    cp functions_package_$(Build.BuildNumber).zip $(Build.ArtifactStagingDirectory)
+    zip -r functions_package.zip . -x node_modules\* 
+    cp functions_package.zip $(Build.ArtifactStagingDirectory)
   displayName: 'Pack and copy functions code'
 
 - task: ArchiveFiles@2
@@ -35,7 +35,7 @@ steps:
     rootFolderOrFile: '$(Build.BinariesDirectory)/nodejs'
     includeRootFolder: true
     archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/node_package_$(Build.BuildNumber).zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/node_package.zip'
     replaceExistingArchive: true
 
 - task: ArchiveFiles@2
@@ -43,7 +43,7 @@ steps:
     rootFolderOrFile: '$(Build.SourcesDirectory)/iac'
     includeRootFolder: false
     archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/iac_package_$(Build.BuildNumber).zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/iac_package.zip'
     replaceExistingArchive: true
 
 - task: PublishBuildArtifacts@1
