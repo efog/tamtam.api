@@ -76,3 +76,9 @@ resource "aws_api_gateway_authorizer" "tamtam_api_authorizer" {
   type          = "COGNITO_USER_POOLS"
   provider_arns = [var.tamtam_aws_cognito_user_pool.arn]
 }
+
+resource "aws_api_gateway_deployment" "MyDemoDeployment" {
+  depends_on = [aws_api_gateway_integration.getuserbyid_integration]
+  rest_api_id = aws_api_gateway_rest_api.tamtam_api.id
+  stage_name  = var.tags.env
+}
