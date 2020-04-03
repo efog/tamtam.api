@@ -12,8 +12,8 @@ pool:
 steps:
 
 - script: |
-    yarn install
     cd $(Build.SourcesDirectory)/functions
+    yarn install
     mkdir $(Build.BinariesDirectory)/nodejs
     cp -r node_modules $(Build.BinariesDirectory)/nodejs
   displayName: 'Pack and copy nodejs dependencies'
