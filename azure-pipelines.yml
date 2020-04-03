@@ -21,7 +21,9 @@ steps:
 - script: |
     cd $(Build.SourcesDirectory)/functions
     zip -r functions_package_$(Build.BuildNumber).zip . -x node_modules\* 
+    ls -alh functions_package_$(Build.BuildNumber).zip
     cp functions_package_$(Build.BuildNumber).zip $(Build.BinariesDirectory)
+    ls -alh $(Build.BinariesDirectory)
   displayName: 'Pack and copy functions code'
 
 - task: ArchiveFiles@2
