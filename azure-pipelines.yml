@@ -1,0 +1,39 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+
+- script: |
+    yarn install
+    cd $(Build.SourcesDirectory)/functions
+    mkdir $(Build.BinariesDirectory)/nodejs
+    cp -r node_modules $(Build.BinariesDirectory)/nodejs
+  displayName: 'Pack and copy nodejs dependencies'
+
+- script: |
+    cd $(Build.SourcesDirectory)/functions
+    zip -r functions_package_$(Build.BuildNumber).zip . -x node_modules\* 
+    cp functions_package_$(Build.BuildNumber).zip $(Build.BinariesDirectory)
+  displayName: 'Pack and copy functions code'
+
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: '$(Build.BinariesDirectory)/nodejs'
+    includeRootFolder: true
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/node_package_$(Build.BuildNumber).zip'
+    replaceExistingArchive: true
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'tamtam_api_build'
+    publishLocation: 'Container'
