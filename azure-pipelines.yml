@@ -32,6 +32,14 @@ steps:
     archiveFile: '$(Build.ArtifactStagingDirectory)/node_package_$(Build.BuildNumber).zip'
     replaceExistingArchive: true
 
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: '$(Build.SourcesDirectory)/iac'
+    includeRootFolder: false
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/iac_package_$(Build.BuildNumber).zip'
+    replaceExistingArchive: true
+
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
