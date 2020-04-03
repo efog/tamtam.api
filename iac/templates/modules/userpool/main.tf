@@ -32,3 +32,21 @@ resource "aws_cognito_user_pool_domain" "main" {
   certificate_arn = var.tamtam_domain_acm_certificate.arn
   user_pool_id    = aws_cognito_user_pool.pool.id
 }
+
+resource "aws_cognito_resource_server" "api_resource" {
+  identifier = "https://${var.tags.env}.api.tamtam.${var.domain}"
+  name       = "${var.tags.env}.tamtam"
+  scope {
+    scope_name        = "api.access"
+    scope_description = "Access API"
+  }
+  scope {
+    scope_name        = "user.read"
+    scope_description = "read user"
+  }
+  scope {
+    scope_name        = "user.write"
+    scope_description = "write user"
+  }
+  user_pool_id = "${aws_cognito_user_pool.pool.id}"
+}
