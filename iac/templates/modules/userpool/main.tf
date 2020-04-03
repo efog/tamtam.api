@@ -20,17 +20,89 @@ resource "aws_cognito_user_pool" "pool" {
       sms_message   = file("${path.module}/templates/smsinvitetemplate.txt")
     }
   }
+  username_attributes = ["email"]
   email_configuration {
     email_sending_account = "DEVELOPER"
     source_arn            = "arn:aws:ses:${var.region}:${var.aws_account_number}:identity/userpool.${var.tags.env}@${var.domain}"
   }
+  schema {
+    name                     = "email"
+    attribute_data_type      = "String"
+    developer_only_attribute = false
+    mutable                  = false  // false for "sub"
+    required                 = true // true for "sub"
+    string_attribute_constraints {   // if it's a string
+      min_length = 0                 // 10 for "birthdate"
+      max_length = 2048              // 10 for "birthdate"
+    }
+  }
+  schema {
+    name                     = "family_name"
+    attribute_data_type      = "String"
+    developer_only_attribute = false
+    mutable                  = true  // false for "sub"
+    required                 = false // true for "sub"
+    string_attribute_constraints {   // if it's a string
+      min_length = 0                 // 10 for "birthdate"
+      max_length = 2048              // 10 for "birthdate"
+    }
+  }
+  schema {
+    name                     = "given_name"
+    attribute_data_type      = "String"
+    developer_only_attribute = false
+    mutable                  = true  // false for "sub"
+    required                 = false // true for "sub"
+    string_attribute_constraints {   // if it's a string
+      min_length = 0                 // 10 for "birthdate"
+      max_length = 2048              // 10 for "birthdate"
+    }
+  }
+  schema {
+    name                     = "middle_name"
+    attribute_data_type      = "String"
+    developer_only_attribute = false
+    mutable                  = true  // false for "sub"
+    required                 = false // true for "sub"
+    string_attribute_constraints {   // if it's a string
+      min_length = 0                 // 10 for "birthdate"
+      max_length = 2048              // 10 for "birthdate"
+    }
+  }
+  schema {
+    name                     = "birthday"
+    attribute_data_type      = "DateTime"
+    developer_only_attribute = false
+    mutable                  = true  // false for "sub"
+    required                 = false // true for "sub"
+    string_attribute_constraints {   // if it's a string
+      min_length = 0                 // 10 for "birthdate"
+      max_length = 2048              // 10 for "birthdate"
+    }
+  }
+  schema {
+    name                     = "phone_number"
+    attribute_data_type      = "String"
+    developer_only_attribute = false
+    mutable                  = true  // false for "sub"
+    required                 = false // true for "sub"
+    string_attribute_constraints {   // if it's a string
+      min_length = 0                 // 10 for "birthdate"
+      max_length = 2048              // 10 for "birthdate"
+    }
+  }
 }
 
-resource "aws_cognito_user_pool_domain" "main" {
+resource "aws_cognito_user_pool_domain" "default_domain" {
   depends_on      = [aws_route53_record.users_domain_a_record]
   domain          = "${var.tags.env}.auth.${var.domain}"
   certificate_arn = var.tamtam_domain_acm_certificate.arn
   user_pool_id    = aws_cognito_user_pool.pool.id
+}
+
+resource "aws_cognito_user_pool_domain" "main_domain" {
+  domain       = "${var.tags.env}-auth-efog-ca"
+  user_pool_id = aws_cognito_user_pool.pool.id
 }
 
 resource "aws_cognito_resource_server" "api_resource" {
