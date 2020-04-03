@@ -51,7 +51,8 @@ resource "aws_api_gateway_method" "method" {
   rest_api_id   = aws_api_gateway_rest_api.tamtam_api.id
   resource_id   = aws_api_gateway_resource.users.id
   http_method   = "GET"
-  authorization = "NONE"
+  authorization = "COGNITO_USER_POOLS"
+  authorizer_id = "${aws_api_gateway_authorizer.tamtam_api_authorizer.id}"
 }
 
 resource "aws_api_gateway_integration" "getuserbyid_integration" {
