@@ -9,3 +9,4 @@ export TF_VAR_region=us-east-1
 terraform init && 
     terraform plan -out tfplan && 
     terraform apply tfplan
+    
