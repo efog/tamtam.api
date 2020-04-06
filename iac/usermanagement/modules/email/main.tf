@@ -27,7 +27,7 @@ resource "aws_route53_record" "tamtam_app_ses_domain_identity_verification_recor
   name    = "_amazonses.${var.domain}"
   type    = "TXT"
   ttl     = "600"
-  records = ["${aws_ses_domain_identity.tamtam_app_ses_domain_identity.verification_token}"]
+  records = [aws_ses_domain_identity.tamtam_app_ses_domain_identity.verification_token]
 }
 
 resource "aws_route53_record" "ses_domain_mail_from_mx" {

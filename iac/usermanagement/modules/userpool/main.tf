@@ -70,17 +70,6 @@ resource "aws_cognito_user_pool" "pool" {
     }
   }
   schema {
-    name                     = "birthday"
-    attribute_data_type      = "DateTime"
-    developer_only_attribute = false
-    mutable                  = true  // false for "sub"
-    required                 = false // true for "sub"
-    string_attribute_constraints {   // if it's a string
-      min_length = 0                 // 10 for "birthdate"
-      max_length = 2048              // 10 for "birthdate"
-    }
-  }
-  schema {
     name                     = "phone_number"
     attribute_data_type      = "String"
     developer_only_attribute = false
@@ -120,5 +109,5 @@ resource "aws_cognito_resource_server" "api_resource" {
     scope_name        = "user.write"
     scope_description = "write user"
   }
-  user_pool_id = "${aws_cognito_user_pool.pool.id}"
+  user_pool_id = aws_cognito_user_pool.pool.id
 }

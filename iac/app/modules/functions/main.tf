@@ -52,7 +52,7 @@ resource "aws_api_gateway_method" "method" {
   resource_id   = aws_api_gateway_resource.users.id
   http_method   = "GET"
   authorization = "COGNITO_USER_POOLS"
-  authorizer_id = "${aws_api_gateway_authorizer.tamtam_api_authorizer.id}"
+  authorizer_id = aws_api_gateway_authorizer.tamtam_api_authorizer.id
 }
 
 resource "aws_api_gateway_integration" "getuserbyid_integration" {
@@ -72,9 +72,9 @@ resource "aws_api_gateway_resource" "users" {
 
 resource "aws_api_gateway_authorizer" "tamtam_api_authorizer" {
   name          = "tamtam_api_authorizer_${var.tags.env}"
-  rest_api_id   = "${aws_api_gateway_rest_api.tamtam_api.id}"
+  rest_api_id   = aws_api_gateway_rest_api.tamtam_api.id
   type          = "COGNITO_USER_POOLS"
-  provider_arns = [var.tamtam_aws_cognito_user_pool.arn]
+  provider_arns = var.tamtam_aws_cognito_user_pools.arns
 }
 
 resource "aws_api_gateway_deployment" "tamtam_api_deployment" {
