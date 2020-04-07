@@ -1,0 +1,11 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": "logs:PutLogEvents",
+            "Resource": "arn:aws:logs:#{region}:#{account_number}:log-group:#{log_group}:log-stream:#{log_stream}"
+        }
+    ]
+}

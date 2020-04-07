@@ -54,6 +54,13 @@ data "aws_cognito_user_pools" "tamtam_aws_cognito_user_pools" {
   name = "tamtam_userpool_${local.tags.env}"
 }
 
+module "monitoring" {
+  source             = "./modules/monitoring"
+  tags               = local.tags
+  aws_account_number = var.aws_account_number
+  region             = var.region
+}
+
 module "functions" {
   source                                = "./modules/functions"
   tags                                  = local.tags
@@ -64,5 +71,6 @@ module "functions" {
   lambda_api_functions_package_filename = var.lambda_api_functions_package_filename
   account_number                        = var.aws_account_number
   region                                = var.region
-  tamtam_aws_cognito_user_pools          = data.aws_cognito_user_pools.tamtam_aws_cognito_user_pools
+  tamtam_aws_cognito_user_pools         = data.aws_cognito_user_pools.tamtam_aws_cognito_user_pools
+  tamtam_apigateway_cloudwatch_role     = module.monitoring.tamtam_apigateway_cloudwatch_role
 }
