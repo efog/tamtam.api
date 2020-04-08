@@ -38,7 +38,7 @@ steps:
       REACT_APP_INSTRUMENTATIONKEY=$(WEBAPP_INSTRUMENTATIONKEY) yarn build
       zip -r webapp_tamtam_package.zip ./build
       cp webapp_tamtam_package.zip $(Build.ArtifactStagingDirectory)
-    workingDirectory: '$(Build.SourcesDirectory)/webapp/tamtam'
+    workingDirectory: '$(Build.SourcesDirectory)/webapps/tamtam'
 
 - task: ArchiveFiles@2
   inputs:
