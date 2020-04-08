@@ -15,7 +15,7 @@ resource "aws_iam_role_policy_attachment" "lambda_users_table_access_policy_atta
 
 resource "aws_iam_role_policy_attachment" "lambda_users_default_lambda_policy_attachment" {
   role       = var.lambda_api_role.name
-  policy_arn = dataaws_iam_policy.lambda_users_table_access_policy_attachment.arn
+  policy_arn = data.aws_iam_policy.lambda_users_table_access_policy_attachment.arn
 }
 
 resource "aws_lambda_layer_version" "lambda_api_layer" {
