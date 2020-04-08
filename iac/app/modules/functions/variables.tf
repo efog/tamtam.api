@@ -15,3 +15,5 @@ variable region {}
 variable account_number {}
 
 variable tamtam_aws_cognito_user_pools {}
+
+variable tamtam_apigateway_cloudwatch_role {}

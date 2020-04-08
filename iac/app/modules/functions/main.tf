@@ -45,6 +45,7 @@ resource "aws_lambda_permission" "apigw_lambda_api_getuserbyid_permission" {
 resource "aws_api_gateway_rest_api" "tamtam_api" {
   name = "tamtam_api_${var.tags.env}"
   tags = var.tags
+  policy
 }
 
 resource "aws_api_gateway_method" "method" {
@@ -81,4 +82,8 @@ resource "aws_api_gateway_deployment" "tamtam_api_deployment" {
   depends_on = [aws_api_gateway_integration.getuserbyid_integration]
   rest_api_id = aws_api_gateway_rest_api.tamtam_api.id
   stage_name  = var.tags.env
+}
+
+resource "aws_api_gateway_account" "tamtam_api_account" {
+  cloudwatch_role_arn = var.tamtam_apigateway_cloudwatch_role
 }
