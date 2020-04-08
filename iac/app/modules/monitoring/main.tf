@@ -23,7 +23,7 @@ resource "aws_iam_policy" "tamtam_apigateway_cloudwatch_policy" {
         , "#{account_number}", var.aws_account_number
       )
     , "#{log_group}", aws_cloudwatch_log_group.tamtam_apigw_loggroup.name)
-  , "#{log_stream}", aws_cloudwatch_log_stream.tamtam_apigw_logggroup_stream.name)
+  , "#{log_stream}", "*")
 }
 
 resource "aws_iam_role_policy_attachment" "tamtam_apigateway_cloudwatch_role_policy" {
