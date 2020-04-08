@@ -39,7 +39,7 @@ resource "aws_lambda_permission" "apigw_lambda_api_getuserbyid_permission" {
   function_name = aws_lambda_function.lambda_api_getuserbyid.function_name
   principal     = "apigateway.amazonaws.com"
   # More: http://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-control-access-using-iam-policies-to-invoke-api.html
-  source_arn = "arn:aws:execute-api:${var.region}:${var.account_number}:${aws_api_gateway_rest_api.tamtam_api.id}/*/${aws_api_gateway_method.method.http_method}${aws_api_gateway_resource.users.path}"
+  source_arn = "arn:aws:execute-api:${var.region}:${var.account_number}:${aws_api_gateway_rest_api.tamtam_api.id}/*/${aws_api_gateway_method.get_users_method.http_method}${aws_api_gateway_resource.users.path}"
 }
 
 resource "aws_api_gateway_rest_api" "tamtam_api" {
@@ -47,19 +47,20 @@ resource "aws_api_gateway_rest_api" "tamtam_api" {
   tags = var.tags
 }
 
-resource "aws_api_gateway_method" "method" {
+resource "aws_api_gateway_method" "get_users_method" {
   rest_api_id   = aws_api_gateway_rest_api.tamtam_api.id
   resource_id   = aws_api_gateway_resource.users.id
   http_method   = "GET"
   authorization = "COGNITO_USER_POOLS"
   authorizer_id = aws_api_gateway_authorizer.tamtam_api_authorizer.id
+  authorization_scopes = ["https://${var.tag.env}.api.tamtam.${var.domain}/api.access"]
 }
 
 resource "aws_api_gateway_integration" "getuserbyid_integration" {
   rest_api_id             = aws_api_gateway_rest_api.tamtam_api.id
   resource_id             = aws_api_gateway_resource.users.id
-  http_method             = aws_api_gateway_method.method.http_method
-  integration_http_method = "POST"
+  http_method             = aws_api_gateway_method.get_users_method.http_method
+  integration_http_method = "GET"
   type                    = "AWS_PROXY"
   uri                     = aws_lambda_function.lambda_api_getuserbyid.invoke_arn
 }
