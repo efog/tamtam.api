@@ -91,5 +91,5 @@ resource "aws_api_gateway_deployment" "tamtam_api_deployment" {
 }
 
 resource "aws_api_gateway_account" "tamtam_api_account" {
-  cloudwatch_role_arn = var.tamtam_apigateway_cloudwatch_role
+  cloudwatch_role_arn = var.tamtam_apigateway_cloudwatch_role.arn
 }
