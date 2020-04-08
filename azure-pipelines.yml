@@ -30,12 +30,15 @@ steps:
     cp functions_package.zip $(Build.ArtifactStagingDirectory)
   displayName: 'Pack and copy functions code'
 
-- script: |
-    cd $(Build.SourcesDirectory)/webapp/tamtam
-    yarn install
-    export REACT_APP_INSTRUMENTATIONKEY=$(WEBAPP_INSTRUMENTATION_KEY) && yarn build
-    zip -r webapp_tamtam_package.zip ./build
-    cp webapp_tamtam_package.zip $(Build.ArtifactStagingDirectory)
+- task: Bash@3
+  inputs:
+    targetType: 'inline'
+    script: |
+      yarn install
+      REACT_APP_INSTRUMENTATIONKEY=$(WEBAPP_INSTRUMENTATIONKEY) yarn build
+      zip -r webapp_tamtam_package.zip ./build
+      cp webapp_tamtam_package.zip $(Build.ArtifactStagingDirectory)
+    workingDirectory: '$(Build.SourcesDirectory)/webapp/tamtam'
 
 - task: ArchiveFiles@2
   inputs:
