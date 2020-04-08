@@ -87,7 +87,6 @@ resource "aws_api_gateway_stage" "tamtam_api_stage" {
 resource "aws_api_gateway_deployment" "tamtam_api_deployment" {
   depends_on  = [aws_api_gateway_integration.getuserbyid_integration]
   rest_api_id = aws_api_gateway_rest_api.tamtam_api.id
-  stage_name  = var.tags.env
 }
 
 resource "aws_api_gateway_account" "tamtam_api_account" {
