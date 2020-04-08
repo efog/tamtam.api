@@ -4,9 +4,18 @@ resource "aws_iam_policy" "lambda_users_table_access_policy" {
   policy      = replace(replace(file("${path.module}/policies/userstableaccess.iampolicy.json"), "#{account_number}", var.aws_account_number), "#{table_name}", var.users_table_name)
 }
 
+data "aws_iam_policy" "default_lambda_policy" {
+  arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+}
+
 resource "aws_iam_role_policy_attachment" "lambda_users_table_access_policy_attachment" {
   role       = var.lambda_api_role.name
   policy_arn = aws_iam_policy.lambda_users_table_access_policy.arn
+}
+
+resource "aws_iam_role_policy_attachment" "lambda_users_default_lambda_policy_attachment" {
+  role       = var.lambda_api_role.name
+  policy_arn = dataaws_iam_policy.lambda_users_table_access_policy_attachment.arn
 }
 
 resource "aws_lambda_layer_version" "lambda_api_layer" {
@@ -48,11 +57,11 @@ resource "aws_api_gateway_rest_api" "tamtam_api" {
 }
 
 resource "aws_api_gateway_method" "get_users_method" {
-  rest_api_id   = aws_api_gateway_rest_api.tamtam_api.id
-  resource_id   = aws_api_gateway_resource.users.id
-  http_method   = "GET"
-  authorization = "COGNITO_USER_POOLS"
-  authorizer_id = aws_api_gateway_authorizer.tamtam_api_authorizer.id
+  rest_api_id          = aws_api_gateway_rest_api.tamtam_api.id
+  resource_id          = aws_api_gateway_resource.users.id
+  http_method          = "GET"
+  authorization        = "COGNITO_USER_POOLS"
+  authorizer_id        = aws_api_gateway_authorizer.tamtam_api_authorizer.id
   authorization_scopes = ["https://${var.tags.env}.api.tamtam.${var.domain}/api.access"]
 }
 
