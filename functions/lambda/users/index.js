@@ -14,6 +14,7 @@ const handlers = {
             });
         }
         catch (err) {
+            console.log(`get user exception: ${JSON.stringify(err)}`);
             if (err.errorMessage === "not found") {
                 return callback(null, {
                     "isBase64Encoded": false,
