@@ -48,7 +48,7 @@ resource "aws_lambda_permission" "apigw_lambda_api_getuserbyid_permission" {
   function_name = aws_lambda_function.lambda_api_getuserbyid.function_name
   principal     = "apigateway.amazonaws.com"
   # More: http://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-control-access-using-iam-policies-to-invoke-api.html
-  source_arn = "arn:aws:execute-api:${var.region}:${var.account_number}:${aws_api_gateway_rest_api.tamtam_api.id}/*/${aws_api_gateway_method.get_users_method.http_method}/${aws_api_gateway_resource.users.path}"
+  source_arn = "arn:aws:execute-api:${var.region}:${var.account_number}:${aws_api_gateway_rest_api.tamtam_api.id}/*/*/${aws_api_gateway_resource.users.path}"
 }
 
 resource "aws_api_gateway_rest_api" "tamtam_api" {
