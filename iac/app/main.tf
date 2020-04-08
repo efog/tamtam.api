@@ -73,4 +73,5 @@ module "functions" {
   region                                = var.region
   tamtam_aws_cognito_user_pools         = data.aws_cognito_user_pools.tamtam_aws_cognito_user_pools
   tamtam_apigateway_cloudwatch_role     = module.monitoring.tamtam_apigateway_cloudwatch_role
+  tamtam_apigw_loggroup                 = module.monitoring.tamtam_apigw_loggroup
 }

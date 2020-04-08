@@ -45,7 +45,6 @@ resource "aws_lambda_permission" "apigw_lambda_api_getuserbyid_permission" {
 resource "aws_api_gateway_rest_api" "tamtam_api" {
   name = "tamtam_api_${var.tags.env}"
   tags = var.tags
-  policy
 }
 
 resource "aws_api_gateway_method" "method" {
@@ -78,8 +77,16 @@ resource "aws_api_gateway_authorizer" "tamtam_api_authorizer" {
   provider_arns = var.tamtam_aws_cognito_user_pools.arns
 }
 
+resource "aws_api_gateway_stage" "tamtam_api_stage" {
+  depends_on    = [var.tamtam_apigw_loggroup]
+  name          = var.tags.env
+  deployment_id = aws_api_gateway_deployment.tamtam_api_deployment.id
+  rest_api_id   = aws_api_gateway_rest_api.tamtam_api.id
+  stage_name    = var.tags.env
+}
+
 resource "aws_api_gateway_deployment" "tamtam_api_deployment" {
-  depends_on = [aws_api_gateway_integration.getuserbyid_integration]
+  depends_on  = [aws_api_gateway_integration.getuserbyid_integration]
   rest_api_id = aws_api_gateway_rest_api.tamtam_api.id
   stage_name  = var.tags.env
 }
