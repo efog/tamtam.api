@@ -53,7 +53,7 @@ resource "aws_api_gateway_method" "get_users_method" {
   http_method   = "GET"
   authorization = "COGNITO_USER_POOLS"
   authorizer_id = aws_api_gateway_authorizer.tamtam_api_authorizer.id
-  authorization_scopes = ["https://${var.tag.env}.api.tamtam.${var.domain}/api.access"]
+  authorization_scopes = ["https://${var.tags.env}.api.tamtam.${var.domain}/api.access"]
 }
 
 resource "aws_api_gateway_integration" "getuserbyid_integration" {

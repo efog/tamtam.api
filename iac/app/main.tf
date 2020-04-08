@@ -64,6 +64,7 @@ module "monitoring" {
 module "functions" {
   source                                = "./modules/functions"
   tags                                  = local.tags
+  domain                                = local.domain
   lambda_api_role                       = data.aws_iam_role.tamtam_lambda_api_role
   aws_account_number                    = var.aws_account_number
   users_table_name                      = module.userdatabase.userdata_table.name
@@ -74,5 +75,4 @@ module "functions" {
   tamtam_aws_cognito_user_pools         = data.aws_cognito_user_pools.tamtam_aws_cognito_user_pools
   tamtam_apigateway_cloudwatch_role     = module.monitoring.tamtam_apigateway_cloudwatch_role
   tamtam_apigw_loggroup                 = module.monitoring.tamtam_apigw_loggroup
-  domain                                = local.domain
 }
