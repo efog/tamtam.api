@@ -4,7 +4,7 @@
         {
             "Sid": "VisualEditor0",
             "Effect": "Allow",
-            "Action": "logs:PutLogEvents",
+            "Action": "logs:*",
             "Resource": "arn:aws:logs:#{region}:#{account_number}:log-group:#{log_group}:log-stream:#{log_stream}"
         }
     ]
