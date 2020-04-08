@@ -30,6 +30,13 @@ steps:
     cp functions_package.zip $(Build.ArtifactStagingDirectory)
   displayName: 'Pack and copy functions code'
 
+- script: |
+    cd $(Build.SourcesDirectory/webapp/tamtam)
+    yarn install
+    REACT_APP_INSTRUMENTATIONKEY=$(WEBAPP_INSTRUMENTATION_KEY) yarn build
+    zip -r webapp_tamtam_package.zip ./build
+    cp webapp_tamtam_package.zip $(Build.ArtifactStagingDirectory)
+
 - task: ArchiveFiles@2
   inputs:
     rootFolderOrFile: '$(Build.BinariesDirectory)/nodejs'
