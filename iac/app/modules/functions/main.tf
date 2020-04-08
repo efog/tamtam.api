@@ -79,7 +79,6 @@ resource "aws_api_gateway_authorizer" "tamtam_api_authorizer" {
 
 resource "aws_api_gateway_stage" "tamtam_api_stage" {
   depends_on    = [var.tamtam_apigw_loggroup]
-  name          = var.tags.env
   deployment_id = aws_api_gateway_deployment.tamtam_api_deployment.id
   rest_api_id   = aws_api_gateway_rest_api.tamtam_api.id
   stage_name    = var.tags.env
