@@ -82,6 +82,11 @@ resource "aws_api_gateway_stage" "tamtam_api_stage" {
   deployment_id = aws_api_gateway_deployment.tamtam_api_deployment.id
   rest_api_id   = aws_api_gateway_rest_api.tamtam_api.id
   stage_name    = var.tags.env
+  tags          = var.tags
+  access_log_settings {
+    destination_arn = var.tamtam_apigw_loggroup.arn
+    format          = "$context.identity.sourceIp $context.identity.caller $context.identity.user [$context.requestTime] '$context.httpMethod $context.resourcePath $context.protocol' $context.status $context.responseLength $context.requestId"
+  }
 }
 
 resource "aws_api_gateway_deployment" "tamtam_api_deployment" {
