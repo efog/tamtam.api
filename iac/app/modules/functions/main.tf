@@ -71,7 +71,7 @@ resource "aws_lambda_permission" "apigw_lambda_api_getuserbyid_permission" {
 }
 
 resource "aws_lambda_permission" "apigw_lambda_api_getaccesstoken_permission" {
-  statement_id  = "AllowExecutionGetuserbyidFromAPIGateway_${var.tags.env}"
+  statement_id  = "AllowExecutionGetAccessTokenFromAPIGateway_${var.tags.env}"
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.lambda_api_getaccesstoken.function_name
   principal     = "apigateway.amazonaws.com"
@@ -150,7 +150,7 @@ resource "aws_api_gateway_stage" "tamtam_api_stage" {
 }
 
 resource "aws_api_gateway_deployment" "tamtam_api_deployment" {
-  depends_on  = [aws_api_gateway_integration.getuserbyid_integration]
+  depends_on  = [aws_api_gateway_integration.getuserbyid_integration, aws_api_gateway_integration.getaccesstoken_integration]
   rest_api_id = aws_api_gateway_rest_api.tamtam_api.id
 }
 

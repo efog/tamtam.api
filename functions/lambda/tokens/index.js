@@ -21,7 +21,7 @@ const handlers = {
             return callback(null, {
                 "isBase64Encoded": false,
                 "statusCode": err.code,
-                "body": JSON.stringify({})
+                "body": JSON.stringify(err)
             });
         }
     }
