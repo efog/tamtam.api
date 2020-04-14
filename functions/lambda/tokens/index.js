@@ -19,7 +19,7 @@ const handlers = {
             });
         }
         catch (err) {
-            console.log(`get user exception: ${JSON.stringify(err)}`);
+            console.log(`got exception: ${JSON.stringify(err)}`);
             return callback(null, {
                 "isBase64Encoded": false,
                 "statusCode": err.code,

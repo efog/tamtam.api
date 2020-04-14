@@ -30,6 +30,7 @@ module.exports = class TokenService {
             console.log("got response");
             return resp.body;
         }
+        console.log(`got bad response ${JSON.stringify(resp)}`);
         throw new BadRequestException(`Request access_token failed with status ${resp.statusCode} : ${resp.body}`, resp.statusCode);
     }
 };
