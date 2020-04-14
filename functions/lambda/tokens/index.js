@@ -9,6 +9,7 @@ const handlers = {
         const clientSecret = process.env.CONFIG_AUTH_CLIENTSECRET;
         const redirectUri = process.env.CONFIG_AUTH_REDIRECT_URI;
         try {
+            const code = event.body ? JSON.stringify(event.body).code : event.code;
             console.log(`Calling get access token service with ${event.code}, ${host}, ${clientId}`);
             const tokens = await service.getAccessTokenFromCode(event.code, host, clientId, clientSecret, redirectUri);
             console.log("got access token response");
