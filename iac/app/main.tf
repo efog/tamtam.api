@@ -32,6 +32,18 @@ variable lambda_api_functions_package_filename {
   default = "functions_package.zip"
 }
 
+variable auth_redirectUri {
+}
+
+variable auth_clientsecret {
+}
+
+variable auth_host {
+}
+
+variable auth_clientId {
+}
+
 locals {
   tags = {
     app = "tamtam"
