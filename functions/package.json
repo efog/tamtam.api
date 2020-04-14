@@ -9,7 +9,8 @@
   "dependencies": {
     "aws-sdk": "^2.649.0",
     "debug": "^4.1.1",
-    "momentjs": "^2.0.0"
+    "momentjs": "^2.0.0",
+    "request": "^2.88.2"
   },
   "devDependencies": {
     "ava": "^3.5.2",

@@ -1,5 +1,7 @@
 import { Container, Nav, Navbar } from "react-bootstrap";
+import { LinkContainer } from "react-router-bootstrap";
 import React from "react";
+import SigninButton from "./signin-button";
 
 /**
  * Renders the nav
@@ -11,8 +13,14 @@ export default function (props, context) {
     return <Navbar expand="lg" variant="light" bg="light">
         <Container>
             <Nav className="mr-auto">
-                <Nav.Link href="#/">Home</Nav.Link>
-                <Nav.Link href="#/signin">Sign in</Nav.Link>
+                <Nav.Item>
+                    <LinkContainer to="/">
+                        <Nav.Link>Home</Nav.Link>
+                    </LinkContainer>
+                </Nav.Item>
+                <Nav.Item>
+                    <SigninButton></SigninButton>
+                </Nav.Item>
             </Nav>
         </Container>
     </Navbar>;
