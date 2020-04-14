@@ -27,5 +27,3 @@ const handlers = {
     }
 };
 module.exports.getAccessToken = handlers.getAccessToken;
-// functions/startConfigurationRulesEvaluation/index.handler
-// lambda/users/getuserbyid/index.handler

@@ -46,7 +46,7 @@ resource "aws_lambda_function" "lambda_api_getaccesstoken" {
   filename         = var.lambda_api_functions_package_filename
   function_name    = "tamtam_getaccesstoken_${var.tags.env}"
   role             = var.lambda_api_role.arn
-  handler          = "lambda/token/index.getAccessToken"
+  handler          = "lambda/tokens/index.getAccessToken"
   tags             = var.tags
   runtime          = "nodejs12.x"
   layers           = [aws_lambda_layer_version.lambda_api_layer.arn]
