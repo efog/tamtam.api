@@ -95,8 +95,8 @@ resource "aws_api_gateway_method" "get_users_method" {
 
 resource "aws_api_gateway_method" "get_accesstoken_method" {
   rest_api_id   = aws_api_gateway_rest_api.tamtam_api.id
-  resource_id   = aws_api_gateway_resource.users.id
-  http_method   = "GET"
+  resource_id   = aws_api_gateway_resource.tokens.id
+  http_method   = "POST"
   authorization = "NONE"
 }
 
@@ -125,7 +125,7 @@ resource "aws_api_gateway_resource" "users" {
 }
 
 resource "aws_api_gateway_resource" "tokens" {
-  path_part   = "token"
+  path_part   = "tokens"
   parent_id   = aws_api_gateway_rest_api.tamtam_api.root_resource_id
   rest_api_id = aws_api_gateway_rest_api.tamtam_api.id
 }
