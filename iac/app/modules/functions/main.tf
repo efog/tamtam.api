@@ -59,6 +59,7 @@ resource "aws_lambda_function" "lambda_api_getaccesstoken" {
       CONFIG_AUTH_REDIRECT_URI = var.auth_redirectUri
     }
   }
+  timeout = 60
 }
 
 resource "aws_lambda_permission" "apigw_lambda_api_getuserbyid_permission" {
