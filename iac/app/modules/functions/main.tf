@@ -56,7 +56,7 @@ resource "aws_lambda_function" "lambda_api_getaccesstoken" {
       CONFIG_AUTH_HOST         = var.auth_host
       CONFIG_AUTH_CLIENTID     = var.auth_clientid
       CONFIG_AUTH_CLIENTSECRET = var.auth.clientsecret
-      CONFIG_AUTH_REDIRECT_URI = var.auth.redirecturi
+      CONFIG_AUTH_REDIRECT_URI = var.auth.redirectUri
     }
   }
 }

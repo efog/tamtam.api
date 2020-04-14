@@ -21,3 +21,11 @@ variable tamtam_aws_cognito_user_pools {}
 variable tamtam_apigateway_cloudwatch_role {}
 
 variable tamtam_apigw_loggroup {}
+
+variable auth_host {}
+
+variable auth_clientid {}
+
+variable auth_clientsecret {}
+
+variable auth_redirectUri {}
