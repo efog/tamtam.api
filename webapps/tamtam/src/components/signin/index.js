@@ -1,7 +1,6 @@
 import { Link, withRouter } from "react-router-dom";
 import React, { Component } from "react";
-import Header from "./header";
-import SigninButton from "../signin/signin-button";
+import { Alert } from "react-bootstrap";
 import { connect } from "react-redux";
 
 const mapStateToProps = (state = {}) => {
@@ -14,18 +13,18 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-class Root extends Component {
+class Signin extends Component {
     componentDidMount() {
     }
     componentWillMount() {
     }
     render() {
         return (
-            <div className="container-fluid no-pad">
-                <Header></Header>
+            <div>
+                
             </div>
         );
     }
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Root));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Signin));

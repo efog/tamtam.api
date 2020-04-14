@@ -1,4 +1,4 @@
-import "./App.css";
+import "./App.scss";
 import { Route, Switch } from "react-router-dom";
 import ErrorBoundary from "./error-boundary";
 import React from "react";

@@ -1,0 +1,27 @@
+@import "~bootstrap/scss/bootstrap";
+@import "./theme.scss";
+
+#brandname {
+  font-size: +6em;
+  font-family: 'Pacifico', cursive;
+}
+
+.no-pad {
+  padding: 0 !important;
+}
+
+.page-header {
+  position: relative;
+  min-height: 200px;
+  background-color: $theme-color;
+  color: $base-color;
+}
+
+.page-header .content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -moz-transform: translateX(-50%) translateY(-50%);
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
+}
