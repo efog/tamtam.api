@@ -9,7 +9,9 @@ const handlers = {
         const clientSecret = process.env.CONFIG_AUTH_CLIENTSECRET;
         const redirectUri = process.env.CONFIG_AUTH_REDIRECT_URI;
         try {
+            console.log(`Calling get access token service with ${event.code}, ${host}, ${clientId}`);
             const tokens = await service.getAccessTokenFromCode(event.code, host, clientId, clientSecret, redirectUri);
+            console.log("got access token response");
             return callback(null, {
                 "isBase64Encoded": false,
                 "statusCode": 200,
@@ -17,7 +19,7 @@ const handlers = {
             });
         }
         catch (err) {
-            console.log(`get user exception: ${JSON.stringify(err)}`);
+            console.log(`got exception: ${JSON.stringify(err)}`);
             return callback(null, {
                 "isBase64Encoded": false,
                 "statusCode": err.code,

@@ -24,10 +24,13 @@ module.exports = class TokenService {
                 "redirect_uri": authRedirectUri
             }
         };
+        console.log("sending request");
         const resp = await this.request(options);
         if (resp.statusCode === "200") {
+            console.log("got response");
             return resp.body;
         }
+        console.log(`got bad response ${JSON.stringify(resp)}`);
         throw new BadRequestException(`Request access_token failed with status ${resp.statusCode} : ${resp.body}`, resp.statusCode);
     }
 };
