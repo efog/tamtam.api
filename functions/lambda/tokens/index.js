@@ -9,9 +9,9 @@ const handlers = {
         const clientSecret = process.env.CONFIG_AUTH_CLIENTSECRET;
         const redirectUri = process.env.CONFIG_AUTH_REDIRECT_URI;
         try {
-            const code = event.body ? JSON.stringify(event.body).code : event.code;
-            console.log(`Calling get access token service with ${JSON.stringify(event.body).code}, ${host}, ${clientId}`);
-            const tokens = await service.getAccessTokenFromCode(JSON.stringify(event.body).code, host, clientId, clientSecret, redirectUri);
+            const code = event.body ? JSON.parse(event.body).code : event.code;
+            console.log(`Calling get access token service with ${code}, ${host}, ${clientId}`);
+            const tokens = await service.getAccessTokenFromCode(code, host, clientId, clientSecret, redirectUri);
             console.log("got access token response");
             return callback(null, {
                 "isBase64Encoded": false,

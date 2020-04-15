@@ -85,13 +85,33 @@ resource "aws_api_gateway_rest_api" "tamtam_api" {
   tags = var.tags
 }
 
-resource "aws_api_gateway_method" "get_users_method" {
-  rest_api_id          = aws_api_gateway_rest_api.tamtam_api.id
-  resource_id          = aws_api_gateway_resource.users.id
-  http_method          = "GET"
-  authorization        = "COGNITO_USER_POOLS"
-  authorizer_id        = aws_api_gateway_authorizer.tamtam_api_authorizer.id
-  authorization_scopes = ["https://${var.tags.env}.api.tamtam.${var.domain}/api.access"]
+resource "aws_api_gateway_authorizer" "tamtam_api_authorizer" {
+  name          = "tamtam_api_authorizer_${var.tags.env}"
+  rest_api_id   = aws_api_gateway_rest_api.tamtam_api.id
+  type          = "COGNITO_USER_POOLS"
+  provider_arns = var.tamtam_aws_cognito_user_pools.arns
+}
+
+resource "aws_api_gateway_deployment" "tamtam_api_deployment" {
+  depends_on  = [aws_api_gateway_integration.getuserbyid_integration, aws_api_gateway_integration.getaccesstoken_integration]
+  rest_api_id = aws_api_gateway_rest_api.tamtam_api.id
+}
+
+resource "aws_api_gateway_account" "tamtam_api_account" {
+  cloudwatch_role_arn = var.tamtam_apigateway_cloudwatch_role.arn
+}
+
+
+resource "aws_api_gateway_resource" "users" {
+  path_part   = "users"
+  parent_id   = aws_api_gateway_rest_api.tamtam_api.root_resource_id
+  rest_api_id = aws_api_gateway_rest_api.tamtam_api.id
+}
+
+resource "aws_api_gateway_resource" "tokens" {
+  path_part   = "tokens"
+  parent_id   = aws_api_gateway_rest_api.tamtam_api.root_resource_id
+  rest_api_id = aws_api_gateway_rest_api.tamtam_api.id
 }
 
 resource "aws_api_gateway_model" "get_accesstoken_model" {
@@ -114,6 +134,14 @@ resource "aws_api_gateway_request_validator" "get_accesstoken_request_validator"
   validate_request_parameters = false
 }
 
+resource "aws_api_gateway_integration" "getaccesstoken_integration" {
+  rest_api_id             = aws_api_gateway_rest_api.tamtam_api.id
+  resource_id             = aws_api_gateway_resource.tokens.id
+  http_method             = aws_api_gateway_method.get_accesstoken_method.http_method
+  integration_http_method = "POST"
+  type                    = "AWS_PROXY"
+  uri                     = aws_lambda_function.lambda_api_getaccesstoken.invoke_arn
+}
 
 resource "aws_api_gateway_method" "get_accesstoken_method" {
   rest_api_id   = aws_api_gateway_rest_api.tamtam_api.id
@@ -126,6 +154,15 @@ resource "aws_api_gateway_method" "get_accesstoken_method" {
   request_validator_id = aws_api_gateway_request_validator.get_accesstoken_request_validator.id
 }
 
+resource "aws_api_gateway_method" "get_users_method" {
+  rest_api_id          = aws_api_gateway_rest_api.tamtam_api.id
+  resource_id          = aws_api_gateway_resource.users.id
+  http_method          = "GET"
+  authorization        = "COGNITO_USER_POOLS"
+  authorizer_id        = aws_api_gateway_authorizer.tamtam_api_authorizer.id
+  authorization_scopes = ["https://${var.tags.env}.api.tamtam.${var.domain}/api.access"]
+}
+
 resource "aws_api_gateway_integration" "getuserbyid_integration" {
   rest_api_id             = aws_api_gateway_rest_api.tamtam_api.id
   resource_id             = aws_api_gateway_resource.users.id
@@ -135,36 +172,8 @@ resource "aws_api_gateway_integration" "getuserbyid_integration" {
   uri                     = aws_lambda_function.lambda_api_getuserbyid.invoke_arn
 }
 
-resource "aws_api_gateway_integration" "getaccesstoken_integration" {
-  rest_api_id             = aws_api_gateway_rest_api.tamtam_api.id
-  resource_id             = aws_api_gateway_resource.tokens.id
-  http_method             = aws_api_gateway_method.get_accesstoken_method.http_method
-  integration_http_method = "POST"
-  type                    = "AWS_PROXY"
-  uri                     = aws_lambda_function.lambda_api_getaccesstoken.invoke_arn
-}
-
-resource "aws_api_gateway_resource" "users" {
-  path_part   = "users"
-  parent_id   = aws_api_gateway_rest_api.tamtam_api.root_resource_id
-  rest_api_id = aws_api_gateway_rest_api.tamtam_api.id
-}
-
-resource "aws_api_gateway_resource" "tokens" {
-  path_part   = "tokens"
-  parent_id   = aws_api_gateway_rest_api.tamtam_api.root_resource_id
-  rest_api_id = aws_api_gateway_rest_api.tamtam_api.id
-}
-
-resource "aws_api_gateway_authorizer" "tamtam_api_authorizer" {
-  name          = "tamtam_api_authorizer_${var.tags.env}"
-  rest_api_id   = aws_api_gateway_rest_api.tamtam_api.id
-  type          = "COGNITO_USER_POOLS"
-  provider_arns = var.tamtam_aws_cognito_user_pools.arns
-}
-
 resource "aws_api_gateway_stage" "tamtam_api_stage" {
-  depends_on    = [var.tamtam_apigw_loggroup]
+  depends_on    = [var.tamtam_apigw_loggroup, aws_api_gateway_integration.getuserbyid_integration, aws_api_gateway_integration.getaccesstoken_integration]
   deployment_id = aws_api_gateway_deployment.tamtam_api_deployment.id
   rest_api_id   = aws_api_gateway_rest_api.tamtam_api.id
   stage_name    = var.tags.env
@@ -173,13 +182,4 @@ resource "aws_api_gateway_stage" "tamtam_api_stage" {
     destination_arn = var.tamtam_apigw_loggroup.arn
     format          = "$context.identity.sourceIp $context.identity.caller $context.identity.user [$context.requestTime] '$context.httpMethod $context.resourcePath $context.protocol' $context.status $context.responseLength $context.requestId"
   }
-}
-
-resource "aws_api_gateway_deployment" "tamtam_api_deployment" {
-  depends_on  = [aws_api_gateway_integration.getuserbyid_integration, aws_api_gateway_integration.getaccesstoken_integration]
-  rest_api_id = aws_api_gateway_rest_api.tamtam_api.id
-}
-
-resource "aws_api_gateway_account" "tamtam_api_account" {
-  cloudwatch_role_arn = var.tamtam_apigateway_cloudwatch_role.arn
 }
