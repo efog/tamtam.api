@@ -102,7 +102,7 @@ resource "aws_api_gateway_model" "get_accesstoken_model" {
 
   schema = <<EOF
   {
-    "code": "string"
+    "type": "object"
   }
   EOF
 }
