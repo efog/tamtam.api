@@ -96,7 +96,7 @@ resource "aws_api_gateway_method" "get_users_method" {
 
 resource "aws_api_gateway_model" "get_accesstoken_model" {
   rest_api_id  = "${aws_api_gateway_rest_api.tamtam_api.id}"
-  name         = "autorization_code"
+  name         = "autorizationcode"
   description  = "JSON schema for access token request"
   content_type = "application/json"
 
