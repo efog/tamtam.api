@@ -5,7 +5,7 @@ const test = require("ava");
 test("can fetch token fron access code", async (expect) => {
     const fakeRequest = sinon.fake.returns(Promise.resolve(
         {
-            "statusCode": "200",
+            "statusCode": 200,
             "body": {
                 "id_token": "abcd",
                 "access_token": "efgh",
@@ -15,7 +15,7 @@ test("can fetch token fron access code", async (expect) => {
     const target = new Services.TokenService(fakeRequest);
     expect.truthy(target);
     const result = await target.getAccessTokenFromCode("a", "b", "c", "d", "e");
-    expect.is(result.access_token, "efgh");
+    expect.is(result.body.access_token, "efgh");
 });
 
 test("can raise errors", async (expect) => {
@@ -26,6 +26,7 @@ test("can raise errors", async (expect) => {
         const result = await target.getAccessTokenFromCode("a", "b", "c", "d", "e");
     }
     catch (err) {
+        expect.is(err.code, 500);
         expect.pass();
     }
 });

@@ -15,8 +15,8 @@ const handlers = {
             console.log("got access token response");
             return callback(null, {
                 "isBase64Encoded": false,
-                "statusCode": 200,
-                "body": tokens
+                "statusCode": tokens.statusCode,
+                "body": tokens.body
             });
         }
         catch (err) {

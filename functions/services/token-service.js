@@ -25,12 +25,13 @@ module.exports = class TokenService {
             }
         };
         console.log("sending request");
-        const resp = await this.request(options);
-        if (resp.statusCode === 200) {
+        try {
+            const resp = await this.request(options);
             console.log("got response");
-            return resp.body;
+            return resp;
         }
-        console.log(`got bad response ${JSON.stringify(resp)}`);
-        throw new BadRequestException(`${resp.body}`, resp.statusCode);
+        catch (err) {
+            throw new BadRequestException(JSON.stringify(err), 500);
+        }
     }
 };
