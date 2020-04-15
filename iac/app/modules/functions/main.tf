@@ -94,11 +94,36 @@ resource "aws_api_gateway_method" "get_users_method" {
   authorization_scopes = ["https://${var.tags.env}.api.tamtam.${var.domain}/api.access"]
 }
 
+resource "aws_api_gateway_model" "get_accesstoken_model" {
+  rest_api_id  = "${aws_api_gateway_rest_api.tamtam_api.id}"
+  name         = "autorization_code"
+  description  = "JSON schema for access token request"
+  content_type = "application/json"
+
+  schema = <<EOF
+  {
+    "code": "string"
+  }
+  EOF
+}
+
+resource "aws_api_gateway_request_validator" "get_accesstoken_request_validator" {
+  name                        = "get_accesstoken_request_validator"
+  rest_api_id                 = "${aws_api_gateway_rest_api.tamtam_api.id}"
+  validate_request_body       = true
+  validate_request_parameters = false
+}
+
+
 resource "aws_api_gateway_method" "get_accesstoken_method" {
   rest_api_id   = aws_api_gateway_rest_api.tamtam_api.id
   resource_id   = aws_api_gateway_resource.tokens.id
   http_method   = "POST"
   authorization = "NONE"
+  request_models = {
+    "application/json" = aws_api_gateway_model.get_accesstoken_model.name
+  }
+  request_validator_id = aws_api_gateway_request_validator.get_accesstoken_request_validator.id
 }
 
 resource "aws_api_gateway_integration" "getuserbyid_integration" {
