@@ -26,7 +26,7 @@ module.exports = class TokenService {
         };
         console.log("sending request");
         const resp = await this.request(options);
-        if (resp.statusCode === "200") {
+        if (resp.statusCode === 200) {
             console.log("got response");
             return resp.body;
         }
