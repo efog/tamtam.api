@@ -1,5 +1,6 @@
 import actions from "./";
-import fetch from "fetch";
+import request from "request";
+import tokenManager from "../services/token-manager";
 
 /**
  * Fetches asynchroneously access, refresh and id tokens for code
@@ -15,19 +16,27 @@ export function getAccessToken(code) {
         );
         const apiBackendHost = process.env.REACT_APP_CONFIG_APIBACKENDHOST;
         const env = process.env.REACT_APP_CONFIG_ENV;
-        const data = JSON.stringify({ "code": code });
+        const data = JSON.stringify({ "code": `${code}` });
         const options = {
             "method": "POST",
+            "url": `https://${apiBackendHost}/${env}/tokens`,
             "headers": {
-                "Content-Type": "application/json",
+                "Content-Type": ["application/json"],
                 "Accept": "application/json"
             },
-            "body": data,
-            "redirect": "follow"
+            "body": data
         };
-        fetch.fetchUrl(`https://${apiBackendHost}/${env}/tokens`, options,
-            (err, result) => { 
-                
-            });
+        request(options, function (error, response) {
+            if (error) {
+                dispatch({
+                    "type": actions.SHOW_ERROR,
+                    "error": error
+                });
+            }
+            if (window.localStorage) {
+                tokenManager.tokens = response.body;
+                console.log(response);
+            }
+        });
     };
 }

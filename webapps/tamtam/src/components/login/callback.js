@@ -1,4 +1,4 @@
-import { Link, withRouter } from "react-router-dom";
+import { Link, Redirect, withRouter } from "react-router-dom";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getAccessToken } from "../../actions/login-actions";
@@ -24,17 +24,16 @@ class LoginCallback extends Component {
         this.code = code;
     }
     componentDidMount() {
+    }
+    componentWillMount() {
         if (this.code) {
             this.props.getAccessToken(this.code);
         }
     }
-    componentWillMount() {
-    }
     render() {
         return (
             <div className="container">
-                <h1>Login Successful</h1>
-                <p>Processing login, please wait...</p>
+                <Redirect to="/"></Redirect>
             </div>
         );
     }
