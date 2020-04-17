@@ -1,3 +1,4 @@
+import Login from "../components/login";
 import Root from "../components/root";
 import Signin from "../components/signin";
 export default [
@@ -11,4 +12,9 @@ export default [
         "path": "/signin",
         "exact": true
     },
+    {
+        "component": Login,
+        "path": "/login/:action",
+        "exact": true
+    }
 ];

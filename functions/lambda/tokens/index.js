@@ -27,6 +27,19 @@ const handlers = {
                 "body": err
             });
         }
+    },
+    async options(event, context, callback) {
+        console.log(`EVENT: ${JSON.stringify(event, null, 2)}`);
+        return callback(null, {
+            "isBase64Encoded": false,
+            "statusCode": 200,
+            "headers": {
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "OPTIONS,POST,GET,PUT,DELETE"
+            },
+            "body": {}
+        });
     }
 };
 module.exports.getAccessToken = handlers.getAccessToken;
+module.exports.options = handlers.options;
