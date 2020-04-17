@@ -25,23 +25,9 @@ export function getAccessToken(code) {
             "body": data,
             "redirect": "follow"
         };
-        fetch.fetchUrl(`https://${apiBackendHost}/${env}/tokens`, options)
-            .then((response) => {
-                response.text();
-            })
-            .then((result) => {
-                console.log(result);
-                dispatch(
-                    {
-                        "type": actions.FETCHED_TOKENS
-                    }
-                );
-                if (window.localStorage) {
-                    window.localStorage.setItem("tokens", result);
-                }
-            })
-            .catch((error) => {
-                console.log("error", error);
+        fetch.fetchUrl(`https://${apiBackendHost}/${env}/tokens`, options,
+            (err, result) => { 
+                
             });
     };
 }

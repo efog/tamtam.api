@@ -30,7 +30,13 @@ const handlers = {
             return callback(null, {
                 "isBase64Encoded": false,
                 "statusCode": err.code,
-                "body": err
+                "body": err,
+                "headers": {
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Methods": "OPTIONS,POST,GET,PUT,DELETE",
+                    "Access-Control-Allow-Headers": "Accept,Content-Type,Pragma,Cache-Control"
+                }
             });
         }
     },
@@ -39,13 +45,13 @@ const handlers = {
         return callback(null, {
             "isBase64Encoded": false,
             "statusCode": 200,
+            "body": "OK",
             "headers": {
                 "Content-Type": "text/plain",
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Methods": "OPTIONS,POST,GET,PUT,DELETE",
                 "Access-Control-Allow-Headers": "Accept,Content-Type,Pragma,Cache-Control"
-            },
-            "body": "OK"
+            }
         });
     }
 };
