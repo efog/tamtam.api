@@ -16,7 +16,13 @@ const handlers = {
             return callback(null, {
                 "isBase64Encoded": false,
                 "statusCode": tokens.statusCode,
-                "body": tokens.body
+                "body": tokens.body,
+                "headers": {
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Methods": "OPTIONS,POST,GET,PUT,DELETE",
+                    "Access-Control-Allow-Headers": "Accept,Content-Type,Pragma,Cache-Control"
+                }
             });
         }
         catch (err) {
