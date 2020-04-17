@@ -92,3 +92,7 @@ module "functions" {
   auth_clientsecret                     = var.auth_clientsecret
   auth_redirectUri                      = var.auth_redirectUri
 }
+
+output tamtam_apigw {
+  value = module.functions.tamtam_apigw
+}
