@@ -19,7 +19,7 @@ const handlers = {
                 "body": tokens.body,
                 "headers": {
                     "Content-Type": "application/json",
-                    "Access-Control-Allow-Origin": "http://localhost:3000",
+                    "Access-Control-Allow-Origin": "*",
                     "Access-Control-Allow-Methods": "OPTIONS,POST,GET,PUT,DELETE",
                     "Access-Control-Allow-Headers": "Accept,Content-Type,Pragma,Cache-Control,User-Agent,Origin,Referer"
                 }
@@ -33,7 +33,7 @@ const handlers = {
                 "body": err,
                 "headers": {
                     "Content-Type": "application/json",
-                    "Access-Control-Allow-Origin": "http://localhost:3000",
+                    "Access-Control-Allow-Origin": "*",
                     "Access-Control-Allow-Methods": "OPTIONS,POST,GET,PUT,DELETE",
                     "Access-Control-Allow-Headers": "Accept,Content-Type,Pragma,Cache-Control,User-Agent,Origin,Referer"
                 }
@@ -44,11 +44,11 @@ const handlers = {
         console.log(`EVENT: ${JSON.stringify(event, null, 2)}`);
         return callback(null, {
             "isBase64Encoded": false,
-            "statusCode": 200,
+            "statusCode": 400,
             "body": "OK",
             "headers": {
                 "Content-Type": "text/plain",
-                "Access-Control-Allow-Origin": "http://localhost:3000",
+                "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Methods": "OPTIONS,POST,GET,PUT,DELETE",
                 "Access-Control-Allow-Headers": "Accept,Content-Type,Pragma,Cache-Control,User-Agent,Origin,Referer"
             }
