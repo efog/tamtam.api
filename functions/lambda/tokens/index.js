@@ -34,10 +34,11 @@ const handlers = {
             "isBase64Encoded": false,
             "statusCode": 200,
             "headers": {
+                "Content-Type": "text/plain",
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Methods": "OPTIONS,POST,GET,PUT,DELETE"
             },
-            "body": {}
+            "body": "OK"
         });
     }
 };
