@@ -18,7 +18,6 @@ const handlers = {
                 "statusCode": tokens.statusCode,
                 "body": tokens.body,
                 "headers": {
-                    "Content-Type": "application/json",
                     "Access-Control-Allow-Origin": "*",
                     "Access-Control-Allow-Methods": "OPTIONS,POST,GET,PUT,DELETE",
                     "Access-Control-Allow-Headers": "Accept,Content-Type,Pragma,Cache-Control,User-Agent,Origin,Referer"
@@ -32,7 +31,6 @@ const handlers = {
                 "statusCode": err.code,
                 "body": err,
                 "headers": {
-                    "Content-Type": "application/json",
                     "Access-Control-Allow-Origin": "*",
                     "Access-Control-Allow-Methods": "OPTIONS,POST,GET,PUT,DELETE",
                     "Access-Control-Allow-Headers": "Accept,Content-Type,Pragma,Cache-Control,User-Agent,Origin,Referer"
@@ -44,7 +42,7 @@ const handlers = {
         console.log(`EVENT: ${JSON.stringify(event, null, 2)}`);
         return callback(null, {
             "isBase64Encoded": false,
-            "statusCode": 400,
+            "statusCode": 200,
             "body": "OK",
             "headers": {
                 "Content-Type": "text/plain",
