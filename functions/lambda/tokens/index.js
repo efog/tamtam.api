@@ -21,7 +21,7 @@ const handlers = {
                     "Content-Type": "application/json",
                     "Access-Control-Allow-Origin": "http://localhost:3000",
                     "Access-Control-Allow-Methods": "OPTIONS,POST,GET,PUT,DELETE",
-                    "Access-Control-Allow-Headers": "Accept,Content-Type,Pragma,Cache-Control"
+                    "Access-Control-Allow-Headers": "Accept,Content-Type,Pragma,Cache-Control,User-Agent,Origin,Referer"
                 }
             });
         }
@@ -35,7 +35,7 @@ const handlers = {
                     "Content-Type": "application/json",
                     "Access-Control-Allow-Origin": "http://localhost:3000",
                     "Access-Control-Allow-Methods": "OPTIONS,POST,GET,PUT,DELETE",
-                    "Access-Control-Allow-Headers": "Accept,Content-Type,Pragma,Cache-Control"
+                    "Access-Control-Allow-Headers": "Accept,Content-Type,Pragma,Cache-Control,User-Agent,Origin,Referer"
                 }
             });
         }
@@ -50,7 +50,7 @@ const handlers = {
                 "Content-Type": "text/plain",
                 "Access-Control-Allow-Origin": "http://localhost:3000",
                 "Access-Control-Allow-Methods": "OPTIONS,POST,GET,PUT,DELETE",
-                "Access-Control-Allow-Headers": "Accept,Content-Type,Pragma,Cache-Control"
+                "Access-Control-Allow-Headers": "Accept,Content-Type,Pragma,Cache-Control,User-Agent,Origin,Referer"
             }
         });
     }
