@@ -37,7 +37,7 @@ const handlers = {
                 "Content-Type": "text/plain",
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Methods": "OPTIONS,POST,GET,PUT,DELETE",
-                "Access-Control-Allow-Headers": "Pragma"
+                "Access-Control-Allow-Headers": "Accept,Content-Type,Pragma,Cache-Control"
             },
             "body": "OK"
         });
