@@ -19,7 +19,7 @@ const handlers = {
                 "body": tokens.body,
                 "headers": {
                     "Content-Type": "application/json",
-                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Origin": "http://localhost:3000",
                     "Access-Control-Allow-Methods": "OPTIONS,POST,GET,PUT,DELETE",
                     "Access-Control-Allow-Headers": "Accept,Content-Type,Pragma,Cache-Control"
                 }
@@ -33,7 +33,7 @@ const handlers = {
                 "body": err,
                 "headers": {
                     "Content-Type": "application/json",
-                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Origin": "http://localhost:3000",
                     "Access-Control-Allow-Methods": "OPTIONS,POST,GET,PUT,DELETE",
                     "Access-Control-Allow-Headers": "Accept,Content-Type,Pragma,Cache-Control"
                 }
@@ -48,7 +48,7 @@ const handlers = {
             "body": "OK",
             "headers": {
                 "Content-Type": "text/plain",
-                "Access-Control-Allow-Origin": "http://localhost:9090",
+                "Access-Control-Allow-Origin": "http://localhost:3000",
                 "Access-Control-Allow-Methods": "OPTIONS,POST,GET,PUT,DELETE",
                 "Access-Control-Allow-Headers": "Accept,Content-Type,Pragma,Cache-Control"
             }
