@@ -14,7 +14,7 @@ module.exports = class TokenService {
         const token = JSON.parse(payload);
         return token;
     }
-    async updateUserDataFromIdToken(tokens) {
+    async updateUserDataFromTokens(tokens) {
         console.log(`Extracting token data ${tokens}`);
         const idToken = await this.parseToken(tokens.id_token);
         console.log(`Parsed id token ${JSON.stringify(idToken)}`);

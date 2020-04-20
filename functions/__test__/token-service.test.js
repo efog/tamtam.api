@@ -78,7 +78,7 @@ test("can save updated userdata from tokens", async (expect) => {
         "upsert": fakeUpsert
     };
     const target = new Services.TokenService(null, userRepository);
-    const retVal = await target.updateUserDataFromIdToken(tokenData);
+    const retVal = await target.updateUserDataFromTokens(tokenData);
     expect.is(retVal.email, "etienne.brouillard@outlook.com");
     expect.is(retVal.userId, "f9955683-8faa-4cf4-8455-a780cf3a461b");
 });

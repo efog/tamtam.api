@@ -12,11 +12,12 @@ const handlers = {
         try {
             const code = event.body ? JSON.parse(event.body).code : event.code;
             const tokens = await service.getAccessTokenFromCode(code, host, clientId, clientSecret, redirectUri);
-            await service.updateUserDataFromIdToken(JSON.parse(tokens.body));
+            await service.updateUserDataFromTokens(JSON.parse(tokens.body));
             const retVal = {
                 "accessToken": tokens.statusCode === 200 ? tokens.body.access_token : null,
                 "refreshToken": tokens.statusCode === 200 ? tokens.body.refresh_token : null
             };
+            console.log(`returning ${JSON.stringify(retVal)} with ${tokens.statusCode}`);
             return callback(null, {
                 "isBase64Encoded": false,
                 "statusCode": tokens.statusCode,
