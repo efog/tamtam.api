@@ -62,7 +62,7 @@ module.exports = class UserRepository {
             "TableName": this.tableName,
             "Item": document
         };
-        const data = await this.documentClient.put(params).promise();
+        await this.documentClient.put(params).promise();
         const update = await this.getByUserId(document.userId);
         return update;
     }

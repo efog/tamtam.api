@@ -1,4 +1,5 @@
 const Services = require("../../services/index.js");
+const UserRepository = require("../../services/repositories/user-repository");
 
 const handlers = {
     async getAccessToken(event, context, callback) {
@@ -10,9 +11,12 @@ const handlers = {
         const redirectUri = process.env.CONFIG_AUTH_REDIRECT_URI;
         try {
             const code = event.body ? JSON.parse(event.body).code : event.code;
-            console.log(`Calling get access token service with ${code}, ${host}, ${clientId}, ${clientSecret}. ${redirectUri}`);
             const tokens = await service.getAccessTokenFromCode(code, host, clientId, clientSecret, redirectUri);
-            console.log("got access token response");
+            await service.updateUserDataFromIdToken(tokens.body);
+            const retVal = {
+                "accessToken": tokens.body.access_token,
+                "refreshToken": tokens.body.refresh_token
+            };
             return callback(null, {
                 "isBase64Encoded": false,
                 "statusCode": tokens.statusCode,
@@ -25,7 +29,7 @@ const handlers = {
             });
         }
         catch (err) {
-            console.log(`got exception: ${JSON.stringify(err)}`);
+            console.error(`EVENT: got exception: ${JSON.stringify(err)}`);
             return callback(null, {
                 "isBase64Encoded": false,
                 "statusCode": err.code,
