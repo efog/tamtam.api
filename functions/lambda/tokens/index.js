@@ -12,7 +12,7 @@ const handlers = {
         try {
             const code = event.body ? JSON.parse(event.body).code : event.code;
             const tokens = await service.getAccessTokenFromCode(code, host, clientId, clientSecret, redirectUri);
-            await service.updateUserDataFromIdToken(tokens.body);
+            await service.updateUserDataFromIdToken(JSON.parse(tokens.body));
             const retVal = {
                 "accessToken": tokens.statusCode === 200 ? tokens.body.access_token : null,
                 "refreshToken": tokens.statusCode === 200 ? tokens.body.refresh_token : null
