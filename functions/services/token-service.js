@@ -15,6 +15,7 @@ module.exports = class TokenService {
         return token;
     }
     async updateUserDataFromIdToken(tokens) {
+        console.log(`Saving token data ${tokens}`);
         const idToken = await this.parseToken(tokens.id_token);
         const accessToken = await this.parseToken(tokens.access_token);
         // eslint-disable-next-line camelcase
@@ -29,7 +30,14 @@ module.exports = class TokenService {
         // eslint-disable-next-line camelcase
         doc.emailVerified = email_verified;
         doc.idToken = tokens.id_token;
-        return await this.userRepository.upsert(doc) || doc;
+        console.log(`Saving doc ${JSON.stringify(doc)}`);
+        try {
+            return await this.userRepository.upsert(doc) || doc;
+        }
+        catch (error) {
+            console.error(error);
+            throw error;
+        }
     }
     async getAccessTokenFromCode(code, authHost, authClientId, authSecret, authRedirectUri) {
         const url = authHost;
