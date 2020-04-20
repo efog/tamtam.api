@@ -15,9 +15,11 @@ module.exports = class TokenService {
         return token;
     }
     async updateUserDataFromIdToken(tokens) {
-        console.log(`Saving token data ${tokens}`);
+        console.log(`Extracting token data ${tokens}`);
         const idToken = await this.parseToken(tokens.id_token);
+        console.log(`Parsed id token ${JSON.stringify(idToken)}`);
         const accessToken = await this.parseToken(tokens.access_token);
+        console.log(`Parsed access token ${JSON.stringify(accessToken)}`);
         // eslint-disable-next-line camelcase
         const { client_id, username } = accessToken;
         // eslint-disable-next-line camelcase
