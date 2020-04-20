@@ -57,6 +57,7 @@ resource "aws_lambda_function" "lambda_api_tokens_post" {
       CONFIG_AUTH_CLIENTID     = var.auth_clientid
       CONFIG_AUTH_CLIENTSECRET = var.auth_clientsecret
       CONFIG_AUTH_REDIRECT_URI = var.auth_redirectUri
+      CONFIG_USERSTABLENAME    = "userdata.${var.tags.env}.${var.appid}"
     }
   }
   timeout = 10

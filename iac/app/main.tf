@@ -53,9 +53,14 @@ locals {
   domain = "efog.ca"
 }
 
+resource "random_id" "userdatabaseid" {
+  byte_length = 8
+}
+
 module "userdatabase" {
   source = "./modules/userdatabase"
   tags   = local.tags
+  appid  = random_id.userdatabaseid.hex
 }
 
 data "aws_iam_role" "tamtam_lambda_api_role" {
@@ -91,6 +96,7 @@ module "functions" {
   auth_host                             = var.auth_host
   auth_clientsecret                     = var.auth_clientsecret
   auth_redirectUri                      = var.auth_redirectUri
+  appid                                 = random_id.userdatabaseid.hex
 }
 
 output tamtam_apigw {

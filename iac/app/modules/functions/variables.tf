@@ -29,3 +29,5 @@ variable auth_clientid {}
 variable auth_clientsecret {}
 
 variable auth_redirectUri {}
+
+variable appid {}
