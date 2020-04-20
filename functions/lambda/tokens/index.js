@@ -14,13 +14,13 @@ const handlers = {
             const tokens = await service.getAccessTokenFromCode(code, host, clientId, clientSecret, redirectUri);
             await service.updateUserDataFromIdToken(tokens.body);
             const retVal = {
-                "accessToken": tokens.body.access_token,
-                "refreshToken": tokens.body.refresh_token
+                "accessToken": tokens.statusCode === 200 ? tokens.body.access_token : null,
+                "refreshToken": tokens.statusCode === 200 ? tokens.body.refresh_token : null
             };
             return callback(null, {
                 "isBase64Encoded": false,
                 "statusCode": tokens.statusCode,
-                "body": tokens.body,
+                "body": tokens.statusCode === 200 ? retVal : tokens.body,
                 "headers": {
                     "Access-Control-Allow-Origin": "*",
                     "Access-Control-Allow-Methods": "OPTIONS,POST,GET,PUT,DELETE",
