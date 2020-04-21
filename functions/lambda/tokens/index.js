@@ -22,7 +22,7 @@ const handlers = {
             return callback(null, {
                 "isBase64Encoded": false,
                 "statusCode": tokens.statusCode,
-                "body": tokens.statusCode === 200 ? retVal : tokens.body,
+                "body": tokens.statusCode === 200 ? JSON.stringify(retVal) : JSON.stringify(tokens.body),
                 "headers": {
                     "Access-Control-Allow-Origin": "*",
                     "Access-Control-Allow-Methods": "OPTIONS,POST,GET,PUT,DELETE",
