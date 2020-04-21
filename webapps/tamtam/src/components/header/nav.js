@@ -19,6 +19,11 @@ export default function (props, context) {
                     </LinkContainer>
                 </Nav.Item>
                 <Nav.Item>
+                    <LinkContainer to="/signup">
+                        <Nav.Link>Sign up</Nav.Link>
+                    </LinkContainer>
+                </Nav.Item>
+                <Nav.Item>
                     <SigninButton></SigninButton>
                 </Nav.Item>
             </Nav>

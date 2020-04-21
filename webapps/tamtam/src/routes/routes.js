@@ -1,6 +1,7 @@
 import Login from "../components/login";
 import Root from "../components/root";
 import Signin from "../components/signin";
+import Signup from "../components/signup";
 export default [
     {
         "component": Root,
@@ -10,6 +11,11 @@ export default [
     {
         "component": Signin,
         "path": "/signin",
+        "exact": true
+    },
+    {
+        "component": Signup,
+        "path": "/signup",
         "exact": true
     },
     {
