@@ -37,6 +37,10 @@ export function getAccessToken(code) {
                 tokenManager.tokens = response.body;
                 console.log(response);
             }
+            dispatch({
+                "type": actions.FETCHED_TOKENS,
+                "tokens": response.body
+            });
         });
     };
 }

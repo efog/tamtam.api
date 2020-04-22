@@ -24,7 +24,7 @@ class Root extends Component {
         return (
             <div className="container">
                 <h1>Hello</h1>
-                <div>{this.props.identity || "Someone"}</div>
+                <div>{this.props.identity && this.props.identity.email || "Someone"}</div>
             </div>
         );
     }

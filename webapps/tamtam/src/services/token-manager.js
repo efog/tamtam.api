@@ -19,7 +19,7 @@ class TokenManager {
             return null;
         }
         const idToken = this.tokens.idToken;
-        const idTokenObject = JSON.parse(atob(idToken));
+        const idTokenObject = JSON.parse(atob(idToken.split(".")[1]));
         return idTokenObject;
     }
     withIdentity(WrappedComponent) {
