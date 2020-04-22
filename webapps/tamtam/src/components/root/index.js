@@ -1,6 +1,8 @@
 import { Link, withRouter } from "react-router-dom";
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import tokenManager from "../../services/token-manager";
+
 
 const mapStateToProps = (state = {}) => {
     return {
@@ -18,12 +20,14 @@ class Root extends Component {
     componentWillMount() {
     }
     render() {
+        console.log(JSON.stringify(this.props.identity));
         return (
             <div className="container">
                 <h1>Hello</h1>
+                <div>{this.props.identity || "Someone"}</div>
             </div>
         );
     }
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Root));
+export default tokenManager.withIdentity(withRouter(connect(mapStateToProps, mapDispatchToProps)(Root)));

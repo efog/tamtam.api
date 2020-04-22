@@ -1,3 +1,5 @@
+import React from "react";
+
 class TokenManager {
     get tokens() {
         if (window.localStorage && window.localStorage.getItem("tokens")) {
@@ -8,13 +10,25 @@ class TokenManager {
     }
     set tokens(value) {
         if (window.localStorage) {
-            window.localStorage.setItem("tokens", JSON.stringify(value));
+            window.localStorage.setItem("tokens", value);
         }
         this._tokens = value;
     }
-    withToken(component) {
-        component.props.tokens = this.tokens;
-        return component;
+    get identity() {
+        if (!this.tokens) {
+            return null;
+        }
+        const idToken = this.tokens.idToken;
+        const idTokenObject = JSON.parse(atob(idToken));
+        return idTokenObject;
+    }
+    withIdentity(WrappedComponent) {
+        const identity = this.identity;
+        return class extends React.Component {
+            render() {
+                return <WrappedComponent identity={identity}></WrappedComponent>;
+            }
+        };
     }
 }
 export default new TokenManager();

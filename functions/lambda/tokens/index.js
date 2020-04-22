@@ -16,7 +16,8 @@ const handlers = {
             await service.updateUserDataFromTokens(body);
             const retVal = {
                 "accessToken": tokens.statusCode === 200 ? body.access_token : null,
-                "refreshToken": tokens.statusCode === 200 ? body.refresh_token : null
+                "refreshToken": tokens.statusCode === 200 ? body.refresh_token : null,
+                "idToken": tokens.statusCode === 200 ? body.id_token : null,
             };
             console.log(`returning ${JSON.stringify(retVal)} with ${tokens.statusCode}`);
             return callback(null, {
