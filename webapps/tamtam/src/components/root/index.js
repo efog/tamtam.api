@@ -15,12 +15,7 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 class Root extends Component {
-    componentDidMount() {
-    }
-    componentWillMount() {
-    }
     render() {
-        console.log(JSON.stringify(this.props.identity));
         return (
             <div className="container">
                 <h1>Hello</h1>

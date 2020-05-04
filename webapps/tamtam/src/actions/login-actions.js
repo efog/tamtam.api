@@ -1,13 +1,35 @@
 import actions from "./";
 import request from "request";
-import tokenManager from "../services/token-manager";
+
+/**
+ * Gets tokens from local storage
+ * @returns {function} dispatch method
+ */
+export function getTokens() {
+    return (dispatch) => {
+        dispatch(
+            {
+                "type": actions.GETTING_TOKENS
+            }
+        );
+        if (window.localStorage && window.localStorage.getItem("tokens")) {
+            const tokens = window.localStorage.getItem("tokens");
+            dispatch(
+                {
+                    "type": actions.GOT_TOKENS,
+                    "tokens": tokens
+                }
+            );
+        }
+    };
+}
 
 /**
  * Fetches asynchroneously access, refresh and id tokens for code
  * @param {string} code authorization code to get tokens for
  * @returns {function} dispatch method
  */
-export function getAccessToken(code) {
+export function fetchTokens(code) {
     return (dispatch) => {
         dispatch(
             {
@@ -34,8 +56,7 @@ export function getAccessToken(code) {
                 });
             }
             if (window.localStorage) {
-                tokenManager.tokens = response.body;
-                console.log(response);
+                window.localStorage.setItem("tokens", response.body);
             }
             dispatch({
                 "type": actions.FETCHED_TOKENS,

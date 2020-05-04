@@ -1,18 +1,20 @@
-import { Link, Redirect, withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getAccessToken } from "../../actions/login-actions";
+import { fetchTokens } from "../../actions/login-actions";
 
 
 const mapStateToProps = (state = {}) => {
+    console.log(`receiving update ${JSON.stringify(state.tokens)}`);
     return {
+        "tokens": state.tokens
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        "getAccessToken": (code) => {
-            dispatch(getAccessToken(code));
+        "fetchTokens": (code) => {
+            dispatch(fetchTokens(code));
         }
     };
 };
@@ -27,13 +29,14 @@ class LoginCallback extends Component {
     }
     componentWillMount() {
         if (this.code) {
-            this.props.getAccessToken(this.code);
+            this.props.fetchTokens(this.code);
         }
     }
     render() {
+        const defaultContent = <div>Login successful. You can proceed to the application by clicking here: <Link to="/">Homepage</Link></div>;
         return (
             <div className="container">
-                <Redirect to="/"></Redirect>
+                {defaultContent}
             </div>
         );
     }

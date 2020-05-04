@@ -1,34 +1,41 @@
 import React from "react";
+import { connect } from "react-redux";
+import { getTokens } from "../actions/login-actions";
+
+const mapStateToProps = (state = {}) => {
+    return {
+        "tokens": state.tokens
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        "getTokens": () => {
+            dispatch(getTokens());
+        }
+    };
+};
 
 class TokenManager {
-    get tokens() {
-        if (window.localStorage && window.localStorage.getItem("tokens")) {
-            const retVal = JSON.parse(window.localStorage.getItem("tokens"));
-            return retVal;
-        }
-        return this._tokens;
-    }
-    set tokens(value) {
-        if (window.localStorage) {
-            window.localStorage.setItem("tokens", value);
-        }
-        this._tokens = value;
-    }
-    get identity() {
-        if (!this.tokens) {
-            return null;
-        }
-        const idToken = this.tokens.idToken;
-        const idTokenObject = JSON.parse(atob(idToken.split(".")[1]));
-        return idTokenObject;
-    }
     withIdentity(WrappedComponent) {
-        const identity = this.identity;
-        return class extends React.Component {
+        return connect(mapStateToProps, mapDispatchToProps)(class extends React.Component {
+            componentWillMount() {
+                this.props.getTokens();
+            }
+            getIdentityFromIdToken() {
+                if (this.props.tokens && this.props.tokens.idToken) {
+                    const idToken = this.props.tokens.idToken;
+                    const idTokenObject = JSON.parse(atob(idToken.split(".")[1]));
+                    return idTokenObject;
+                }
+                console.log("didn't have token");
+                return null;
+            }
             render() {
+                const identity = this.getIdentityFromIdToken();
                 return <WrappedComponent identity={identity}></WrappedComponent>;
             }
-        };
+        });
     }
 }
 export default new TokenManager();
