@@ -2,10 +2,10 @@ import actions from "../../actions";
 
 export default (state = {}, action) => {
     switch (action.type) {
+    case actions.CLEARED_TOKENS:
     case actions.FETCHED_TOKENS: 
     case actions.GOT_TOKENS: {
-        const updated = Object.assign(state, JSON.parse(action.tokens));
-        return updated;
+        return Object.assign({}, state, JSON.parse(action.tokens));
     }
     default:
         return state;

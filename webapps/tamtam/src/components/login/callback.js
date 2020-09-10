@@ -1,5 +1,5 @@
-import { Link, withRouter } from "react-router-dom";
 import React, { Component } from "react";
+import { Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { fetchTokens } from "../../actions/login-actions";
 
@@ -26,14 +26,12 @@ class LoginCallback extends Component {
         this.code = code;
     }
     componentDidMount() {
-    }
-    componentWillMount() {
         if (this.code) {
             this.props.fetchTokens(this.code);
         }
     }
     render() {
-        const defaultContent = <div>Login successful. You can proceed to the application by clicking here: <Link to="/">Homepage</Link></div>;
+        const defaultContent = this.props.tokens.accessToken ? <Redirect to="/"></Redirect> : <div>Finishing authentication...</div>;
         return (
             <div className="container">
                 {defaultContent}

@@ -1,7 +1,6 @@
-import { Container, Nav, Navbar } from "react-bootstrap";
-import { Link, withRouter } from "react-router-dom";
-import React, { Component } from "react";
 import { LinkContainer } from "react-router-bootstrap";
+import { Nav } from "react-bootstrap";
+import React from "react";
 
 /**
  * Renders the signin button

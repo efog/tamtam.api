@@ -1,6 +1,6 @@
-import { Link, withRouter } from "react-router-dom";
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 
 const mapStateToProps = (state = {}) => {
     return {
@@ -14,8 +14,6 @@ const mapDispatchToProps = (dispatch) => {
 
 class SignIn extends Component {
     componentDidMount() {
-    }
-    componentWillMount() {
     }
     render() {
         const authUrl = process.env.REACT_APP_AUTH_HOST || "dev.auth.efog.ca";

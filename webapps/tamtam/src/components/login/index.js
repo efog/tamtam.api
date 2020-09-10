@@ -1,7 +1,6 @@
-import { Link, useLocation, useParams, withRouter } from "react-router-dom";
-import React, { Component, useCallback } from "react";
+import { useLocation, useParams } from "react-router-dom";
 import Callback from "./callback";
-import tokenManager from "../../services/token-manager";
+import React from "react";
 
 /**
  * Custom hook to fetch query parameters
@@ -17,7 +16,7 @@ function useQuery() {
  * @param {*} context component context
  * @returns {object} rendered signin button
  */
-export default tokenManager.withIdentity(function (props, context) {
+export default function (props, context) {
     const { action } = useParams();
     const code = useQuery().get("code");
     switch (action) {
@@ -28,4 +27,4 @@ export default tokenManager.withIdentity(function (props, context) {
             <h1>Login Page</h1>
         </div>;
     }
-});
+}

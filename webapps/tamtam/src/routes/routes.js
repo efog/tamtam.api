@@ -1,6 +1,8 @@
 import Login from "../components/login";
+import Logout from "../components/logout";
 import Root from "../components/root";
 import Signin from "../components/signin";
+import Signout from "../components/signout";
 import Signup from "../components/signup";
 export default [
     {
@@ -19,8 +21,18 @@ export default [
         "exact": true
     },
     {
+        "component": Signout,
+        "path": "/signout",
+        "exact": false
+    },
+    {
         "component": Login,
         "path": "/login/:action",
+        "exact": true
+    },
+    {
+        "component": Logout,
+        "path": "/logout",
         "exact": true
     }
 ];

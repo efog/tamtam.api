@@ -4,26 +4,24 @@ import ErrorBoundary from "./error-boundary";
 import Header from "./components/header";
 import React from "react";
 import routes from "./routes/routes";
+import tokenManager from "./services/token-manager";
 
-/**
- * App render function
- * @returns {JSX} rendered component
- */
-function App() {
-    const routesMarkup = routes.map((route) => {
-        return <Route key={route.path} {...route} />;
-    });
-    console.log(routesMarkup);
-    return (
-        <div className="">
-            <ErrorBoundary>
-                <Header></Header>
-                <Switch>
-                    {routesMarkup}
-                </Switch>
-            </ErrorBoundary>
-        </div>
-    );
+class App extends React.Component {
+    render() {
+        const routesMarkup = routes.map((route) => {
+            return <Route key={route.path} {...route} />;
+        });
+        
+        return (
+            <div className="">
+                <ErrorBoundary>
+                    <Header></Header>
+                    <Switch>
+                        {routesMarkup}
+                    </Switch>
+                </ErrorBoundary>
+            </div>
+        );
+    }
 }
-
-export default App;
+export default tokenManager.withIdentity(App);

@@ -1,10 +1,10 @@
-import { Link, Redirect, withRouter } from "react-router-dom";
 import React from "react";
 import { SeverityLevel } from "@microsoft/applicationinsights-web";
 import { ai } from "./telemetry-service";
 import { connect } from "react-redux";
 import { createBrowserHistory } from "history";
 import { displayErrorToast } from "./actions/ui-actions";
+import { withRouter } from "react-router-dom";
 
 const history = createBrowserHistory({ "basename": "" });
 ai.initialize({ "history": history });
