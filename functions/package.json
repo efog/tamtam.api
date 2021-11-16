@@ -8,7 +8,7 @@
   "author": "Efog",
   "dependencies": {
     "atob": "^2.1.2",
-    "aws-sdk": "^2.649.0",
+    "aws-sdk": "^2.814.0",
     "btoa": "^1.2.1",
     "debug": "^4.1.1",
     "momentjs": "^2.0.0",
